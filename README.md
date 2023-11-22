@@ -1,5 +1,5 @@
 # Nevsnirg.DomainEvents
-Minimal impact domain event raising and dispatching framework leveraging AsyncLocal to scope and track domain events raised from your domain model.
+Minimal impact domain event raising and dispatching framework leveraging AsyncLocal to scope and track domain events raised from your domain model across threads. This allows for the tracking of domain events raised in an entity existing inside a user defined scope or parent class lifetime, without the need for exposing a public collection of domain events on the entity which needs to be (manually) tracked.
 
 ## Packages
 ### Nevsnirg.DomainEvents.Contract
@@ -45,6 +45,7 @@ using (var scope = DomainEventTracker.CreateScope())
     using (var nestedScope = DomainEventTracker.CreateScope())
     {
         DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the nested scope."));
+
         using (var evenMoreNestedScope = DomainEventTracker.CreateScope())
         {
             DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the deepest scope."));
