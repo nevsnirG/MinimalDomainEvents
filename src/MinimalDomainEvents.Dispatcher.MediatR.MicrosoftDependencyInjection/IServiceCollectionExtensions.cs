@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection;
+namespace MinimalDomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection;
 
 public static class IServiceCollectionExtensions
 {

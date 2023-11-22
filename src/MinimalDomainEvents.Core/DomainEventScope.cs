@@ -1,6 +1,6 @@
-﻿using Nevsnirg.DomainEvents.Contract;
+﻿using MinimalDomainEvents.Contract;
 
-namespace Nevsnirg.DomainEvents.Core;
+namespace MinimalDomainEvents.Core;
 
 public interface IDomainEventScope : IDisposable
 {

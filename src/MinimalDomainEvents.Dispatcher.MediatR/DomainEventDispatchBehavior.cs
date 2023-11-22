@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Nevsnirg.DomainEvents.Core;
+using MinimalDomainEvents.Core;
 
-namespace Nevsnirg.DomainEvents.Dispatcher.MediatR;
+namespace MinimalDomainEvents.Dispatcher.MediatR;
 
 public class DomainEventDispatchBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

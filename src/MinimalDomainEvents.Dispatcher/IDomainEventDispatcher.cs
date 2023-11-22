@@ -1,4 +1,4 @@
-﻿namespace Nevsnirg.DomainEvents.Dispatcher;
+﻿namespace MinimalDomainEvents.Dispatcher;
 
 public interface IDomainEventDispatcher
 {

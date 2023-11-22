@@ -1,4 +1,4 @@
-﻿namespace Nevsnirg.DomainEvents.Core;
+﻿namespace MinimalDomainEvents.Core;
 internal static class WeakReferenceExtensions
 {
     internal static void IfRefIsStrong<TIn>(this WeakReference<TIn> weakRef, Action<TIn> @do, Action @else)

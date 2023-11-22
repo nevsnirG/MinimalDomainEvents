@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Nevsnirg.DomainEvents.Dispatcher\Nevsnirg.DomainEvents.Dispatcher.csproj" />
+		<ProjectReference Include="..\..\src\MinimalDomainEvents.Core\MinimalDomainEvents.Core.csproj" />
 	</ItemGroup>
 
 </Project>

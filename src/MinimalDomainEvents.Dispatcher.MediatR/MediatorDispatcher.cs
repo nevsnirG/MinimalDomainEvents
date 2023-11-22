@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Nevsnirg.DomainEvents.Contract;
+using MinimalDomainEvents.Contract;
 
-namespace Nevsnirg.DomainEvents.Dispatcher.MediatR;
+namespace MinimalDomainEvents.Dispatcher.MediatR;
 
 public class MediatorDispatcher : ScopedDomainEventDispatcher
 {

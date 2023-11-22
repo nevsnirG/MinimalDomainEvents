@@ -1,9 +1,9 @@
 using FluentAssertions;
-using Nevsnirg.DomainEvents.Contract;
-using Nevsnirg.DomainEvents.Core;
+using MinimalDomainEvents.Contract;
+using MinimalDomainEvents.Core;
 using System.Runtime.CompilerServices;
 
-namespace Nevsnirg.DomainEvents.Dispatcher.UnitTests;
+namespace MinimalDomainEvents.Dispatcher.UnitTests;
 
 public class ScopedDomainEventDispatcherTests
 {

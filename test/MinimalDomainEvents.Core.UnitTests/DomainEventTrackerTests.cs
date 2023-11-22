@@ -1,7 +1,7 @@
 using FluentAssertions;
-using Nevsnirg.DomainEvents.Contract;
+using MinimalDomainEvents.Contract;
 
-namespace Nevsnirg.DomainEvents.Core.UnitTests;
+namespace MinimalDomainEvents.Core.UnitTests;
 
 public class DomainEventTrackerTests
 {

@@ -1,7 +1,7 @@
-﻿using Nevsnirg.DomainEvents.Contract;
-using Nevsnirg.DomainEvents.Core;
+﻿using MinimalDomainEvents.Contract;
+using MinimalDomainEvents.Core;
 
-namespace Nevsnirg.DomainEvents.Dispatcher;
+namespace MinimalDomainEvents.Dispatcher;
 
 public abstract class ScopedDomainEventDispatcher : IDomainEventDispatcher, IDisposable
 {
