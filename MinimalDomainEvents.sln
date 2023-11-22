@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Core", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Contract", "src\MinimalDomainEvents.Contract\MinimalDomainEvents.Contract.csproj", "{DE007C35-3549-4E82-BC5C-5093BE7E208D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher", "src\MinimalDomainEvents.Dispatcher\MinimalDomainEvents.Dispatcher.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher", "src\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.MediatR", "src\MinimalDomainEvents.Dispatcher.MediatR\MinimalDomainEvents.Dispatcher.MediatR.csproj", "{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}"
 EndProject
