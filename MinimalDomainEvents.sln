@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Core", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Contract", "src\MinimalDomainEvents.Contract\MinimalDomainEvents.Contract.csproj", "{DE007C35-3549-4E82-BC5C-5093BE7E208D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher", "src\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.Abstractions", "src\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.MediatR", "src\MinimalDomainEvents.Dispatcher.MediatR\MinimalDomainEvents.Dispatcher.MediatR.csproj", "{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}"
 EndProject
@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A37BECD1-4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Core.UnitTests", "test\MinimalDomainEvents.Core.UnitTests\MinimalDomainEvents.Core.UnitTests.csproj", "{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.UnitTests", "test\MinimalDomainEvents.Dispatcher.UnitTests\MinimalDomainEvents.Dispatcher.UnitTests.csproj", "{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.Abstractions.UnitTests", "test\MinimalDomainEvents.Dispatcher.Abstractions.UnitTests\MinimalDomainEvents.Dispatcher.Abstractions.UnitTests.csproj", "{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A3B7B6C3-57FD-4382-8526-9B1C48935A07}"
 EndProject
