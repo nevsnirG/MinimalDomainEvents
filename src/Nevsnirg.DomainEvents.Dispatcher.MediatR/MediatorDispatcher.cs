@@ -3,11 +3,11 @@ using Nevsnirg.DomainEvents.Contract;
 
 namespace Nevsnirg.DomainEvents.Dispatcher.MediatR;
 
-public class MediatrDispatcher : ScopedDomainEventDispatcher
+public class MediatorDispatcher : ScopedDomainEventDispatcher
 {
     private readonly IMediator _mediator;
 
-    public MediatrDispatcher(IMediator mediator) : base()
+    public MediatorDispatcher(IMediator mediator) : base()
     {
         _mediator = mediator;
     }
