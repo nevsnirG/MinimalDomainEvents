@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Core", "Nevsnirg.DomainEvents.Core\Nevsnirg.DomainEvents.Core.csproj", "{A34E31FD-0B03-412D-8427-2307D1F1D685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Core", "src\Nevsnirg.DomainEvents.Core\Nevsnirg.DomainEvents.Core.csproj", "{A34E31FD-0B03-412D-8427-2307D1F1D685}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Contract", "Nevsnirg.DomainEvents.Contract\Nevsnirg.DomainEvents.Contract.csproj", "{DE007C35-3549-4E82-BC5C-5093BE7E208D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Contract", "src\Nevsnirg.DomainEvents.Contract\Nevsnirg.DomainEvents.Contract.csproj", "{DE007C35-3549-4E82-BC5C-5093BE7E208D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher", "Nevsnirg.DomainEvents.Dispatcher\Nevsnirg.DomainEvents.Dispatcher.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher", "src\Nevsnirg.DomainEvents.Dispatcher\Nevsnirg.DomainEvents.Dispatcher.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher.MediatR", "Nevsnirg.DomainEvents.Dispatcher.MediatR\Nevsnirg.DomainEvents.Dispatcher.MediatR.csproj", "{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher.MediatR", "src\Nevsnirg.DomainEvents.Dispatcher.MediatR\Nevsnirg.DomainEvents.Dispatcher.MediatR.csproj", "{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dispatching", "Dispatching", "{33E5376B-09DA-4B6A-896E-DE8F5F76F9CD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Extensions.DependencyInjection", "Microsoft.Extensions.DependencyInjection", "{78B2BB25-E842-4C86-B76B-EEB3687FA3C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection", "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection\Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection.csproj", "{53612BC0-A29A-453C-950E-D235D0DAB032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection", "src\Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection\Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection.csproj", "{53612BC0-A29A-453C-950E-D235D0DAB032}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A37BECD1-4461-4E64-BF71-B48ACEBB8447}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Core.UnitTests", "Nevsnirg.DomainEvents.Core.UnitTests\Nevsnirg.DomainEvents.Core.UnitTests.csproj", "{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Core.UnitTests", "test\Nevsnirg.DomainEvents.Core.UnitTests\Nevsnirg.DomainEvents.Core.UnitTests.csproj", "{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nevsnirg.DomainEvents.Dispatcher.UnitTests", "Nevsnirg.DomainEvents.Dispatcher.UnitTests\Nevsnirg.DomainEvents.Dispatcher.UnitTests.csproj", "{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nevsnirg.DomainEvents.Dispatcher.UnitTests", "test\Nevsnirg.DomainEvents.Dispatcher.UnitTests\Nevsnirg.DomainEvents.Dispatcher.UnitTests.csproj", "{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
