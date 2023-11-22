@@ -97,7 +97,7 @@ return services
 ```
 
 ### MinimalDomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection
-IServiceCollection extension method for registering the MediatorDispatcher and DOmainEventDispatchBehavior.
+IServiceCollection extension method for registering the MediatorDispatcher and DomainEventDispatchBehavior.
 
 #### Example
 ```csharp
