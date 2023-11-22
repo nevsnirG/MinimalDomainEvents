@@ -16,6 +16,8 @@ public static class DomainEventTracker
 
     internal static void ExitScope()
     {
+        // TODO - Technically you could manually dispose of a parent scope while inside of a nested scope.
+        // In that case pop until the parent scope that was disposed manually is popped. 
         _scopes.Value!.Pop();
     }
 
