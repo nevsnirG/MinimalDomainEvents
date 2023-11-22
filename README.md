@@ -45,6 +45,7 @@ using (var scope = DomainEventTracker.CreateScope())
     using (var nestedScope = DomainEventTracker.CreateScope())
     {
         DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the nested scope."));
+
         using (var evenMoreNestedScope = DomainEventTracker.CreateScope())
         {
             DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the deepest scope."));
