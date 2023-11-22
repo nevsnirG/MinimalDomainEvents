@@ -38,6 +38,7 @@ public class DomainEventTrackerTests
                 using (var evenMoreNestedScope = DomainEventTracker.CreateScope())
                 {
                     DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the deepest scope."));
+                    DomainEventTracker.Peek().Should().HaveCount(1);
                 }
 
                 DomainEventTracker.RaiseDomainEvent(new TestEvent("I was also raised in the nested scope."));

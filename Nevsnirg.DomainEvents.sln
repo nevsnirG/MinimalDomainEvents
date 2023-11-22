@@ -15,11 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dispatching", "Dispatching"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Extensions.DependencyInjection", "Microsoft.Extensions.DependencyInjection", "{78B2BB25-E842-4C86-B76B-EEB3687FA3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection", "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection\Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection.csproj", "{53612BC0-A29A-453C-950E-D235D0DAB032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection", "Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection\Nevsnirg.DomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection.csproj", "{53612BC0-A29A-453C-950E-D235D0DAB032}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A37BECD1-4461-4E64-BF71-B48ACEBB8447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nevsnirg.DomainEvents.Core.UnitTests", "Nevsnirg.DomainEvents.Core.UnitTests\Nevsnirg.DomainEvents.Core.UnitTests.csproj", "{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nevsnirg.DomainEvents.Core.UnitTests", "Nevsnirg.DomainEvents.Core.UnitTests\Nevsnirg.DomainEvents.Core.UnitTests.csproj", "{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nevsnirg.DomainEvents.Dispatcher.UnitTests", "Nevsnirg.DomainEvents.Dispatcher.UnitTests\Nevsnirg.DomainEvents.Dispatcher.UnitTests.csproj", "{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59652783-822F-4C8F-8F58-8EFC8BFD6EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69F0B96-B7DD-454F-9CAB-D508DFCCE203}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{78B2BB25-E842-4C86-B76B-EEB3687FA3C0} = {33E5376B-09DA-4B6A-896E-DE8F5F76F9CD}
 		{53612BC0-A29A-453C-950E-D235D0DAB032} = {78B2BB25-E842-4C86-B76B-EEB3687FA3C0}
 		{59652783-822F-4C8F-8F58-8EFC8BFD6EEF} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}
+		{F69F0B96-B7DD-454F-9CAB-D508DFCCE203} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C04EBF0-7B5F-4CCE-8D3C-55C5B17C2BEB}

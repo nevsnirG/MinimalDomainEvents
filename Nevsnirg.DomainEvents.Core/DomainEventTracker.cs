@@ -1,18 +1,17 @@
 ﻿using Nevsnirg.DomainEvents.Contract;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Nevsnirg.DomainEvents.Core;
 
 public static class DomainEventTracker
 {
-    private static readonly AsyncLocal<Stack<List<IDomainEvent>>> _scopes = new AsyncLocal<Stack<List<IDomainEvent>>>();
+    private static readonly AsyncLocal<Stack<WeakReference<DomainEventScope>>> _scopes = new();
 
     public static IDomainEventScope CreateScope()
     {
-        _scopes.Value ??= new Stack<List<IDomainEvent>>();
-        _scopes.Value.Push(new List<IDomainEvent>());
-
-        return new DomainEventScope(_scopes.Value.Count);
+        _scopes.Value ??= new Stack<WeakReference<DomainEventScope>>();
+        var newScope = new DomainEventScope();
+        _scopes.Value.Push(new WeakReference<DomainEventScope>(newScope, false));
+        return newScope;
     }
 
     internal static void ExitScope()
@@ -22,22 +21,46 @@ public static class DomainEventTracker
 
     public static void RaiseDomainEvent(IDomainEvent domainEvent)
     {
-        var deepestScope = _scopes.Value!.Peek();
-        deepestScope.Add(domainEvent);
+        var deepestScopeRef = _scopes.Value!.Peek();
+
+        deepestScopeRef.IfRefIsStrong(
+            @do: strongRef => strongRef.RaiseDomainEvent(domainEvent),
+            @else: () => _scopes.Value.Pop()
+            );
     }
 
     public static IReadOnlyCollection<IDomainEvent> Peek()
     {
-        if (_scopes.Value!.TryPeek(out var deepestScope))
-            return deepestScope!.AsReadOnly();
+        if (_scopes.Value!.TryPeek(out var deepestScopeRef))
+        {
+            return deepestScopeRef.IfRefIsStrong(
+                @do: strongRef => strongRef.Peek(),
+                @else: () =>
+                {
+                    _scopes.Value.Pop();
+                    return Peek();
+                });
+        }
         else
-            return new List<IDomainEvent>().AsReadOnly();
+            return EmptyCollection();
     }
 
     public static IReadOnlyCollection<IDomainEvent> GetAndClearEvents()
     {
-        var deepestScope = _scopes.Value!.Pop();
-        _scopes.Value.Push(new List<IDomainEvent>());
-        return deepestScope.AsReadOnly() ?? new List<IDomainEvent>().AsReadOnly();
+        if (_scopes.Value!.TryPeek(out var deepestScopeRef))
+        {
+            return deepestScopeRef.IfRefIsStrong(
+                @do: strongRef => strongRef.GetAndClearEvents(),
+                @else: () =>
+                {
+                    _scopes.Value.Pop();
+                    return GetAndClearEvents();
+                });
+        }
+        else
+            return EmptyCollection();
     }
+
+    private static IReadOnlyCollection<IDomainEvent> EmptyCollection() =>
+        new List<IDomainEvent>(0).AsReadOnly();
 }

@@ -6,6 +6,7 @@ namespace Nevsnirg.DomainEvents.Dispatcher;
 public abstract class ScopedDomainEventDispatcher : IDomainEventDispatcher, IDisposable
 {
     private IDisposable? _scope;
+
     protected ScopedDomainEventDispatcher()
     {
         _scope = DomainEventTracker.CreateScope();
@@ -14,7 +15,7 @@ public abstract class ScopedDomainEventDispatcher : IDomainEventDispatcher, IDis
     public virtual async Task DispatchAndClear()
     {
         var domainEvents = DomainEventTracker.GetAndClearEvents();
-        await Dispatch(domainEvents.AsReadOnly() ?? new List<IDomainEvent>(0).AsReadOnly());
+        await Dispatch(domainEvents ?? new List<IDomainEvent>(0).AsReadOnly());
     }
 
     protected abstract Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents);

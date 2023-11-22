@@ -4,28 +4,31 @@ namespace Nevsnirg.DomainEvents.Core;
 
 public interface IDomainEventScope : IDisposable
 {
-    int Id { get; } //TODO - Change to Guid/string.
     IReadOnlyCollection<IDomainEvent> GetAndClearEvents();
+    IReadOnlyCollection<IDomainEvent> Peek();
     void RaiseDomainEvent(IDomainEvent domainEvent);
 }
 
 internal sealed class DomainEventScope : IDomainEventScope
 {
-    public int Id { get; }
 
-    public DomainEventScope(int id)
-    {
-        Id = id;
-    }
+    private List<IDomainEvent> _domainEvents = new();
 
     public void RaiseDomainEvent(IDomainEvent domainEvent)
     {
-        DomainEventTracker.RaiseDomainEvent(domainEvent);
+        _domainEvents.Add(domainEvent);
+    }
+
+    public IReadOnlyCollection<IDomainEvent> Peek()
+    {
+        return _domainEvents.AsReadOnly();
     }
 
     public IReadOnlyCollection<IDomainEvent> GetAndClearEvents()
     {
-        return DomainEventTracker.GetAndClearEvents();
+        var events = _domainEvents.AsReadOnly() ?? new List<IDomainEvent>().AsReadOnly();
+        _domainEvents = new List<IDomainEvent>();
+        return events;
     }
 
     public void Dispose()
