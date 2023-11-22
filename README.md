@@ -27,7 +27,7 @@ using (var scope = DomainEventTracker.CreateScope())
     scope.RaiseDomainEvent(new TestEvent());
 }
 ```
-Domain events raised using the static DomainEventTracker are raised on the current active scope (the deepest existing scope).
+Domain events raised using the static DomainEventTracker are raised on the current active scope (the deepest existing scope). Calling Peek on the DomainEventTracker yields the same result als calling Peek on the current active scope.
 ```csharp
 using (var scope = DomainEventTracker.CreateScope())
 {
