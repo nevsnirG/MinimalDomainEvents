@@ -34,7 +34,7 @@ Raising a domain event on a specific scope.
 ```csharp
 using (var scope = DomainEventTracker.CreateScope())
 {
-  scope.RaiseDomainEvent(new TestEvent());
+    scope.RaiseDomainEvent(new TestEvent());
 }
 ```
 Domain events raised using the static DomainEventTracker are raised on the current active scope (the deepest existing scope).
