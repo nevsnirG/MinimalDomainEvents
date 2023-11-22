@@ -38,14 +38,23 @@ public class DomainEventTrackerTests
                 using (var evenMoreNestedScope = DomainEventTracker.CreateScope())
                 {
                     DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the deepest scope."));
-                    DomainEventTracker.Peek().Should().HaveCount(1);
+                    DomainEventTracker.Peek().Should().HaveCount(1)
+                        .And.Subject.Single().Should().BeOfType<TestEvent>()
+                        .Which.Value.Should().Be("I was raised in the deepest scope.");
                 }
 
                 DomainEventTracker.RaiseDomainEvent(new TestEvent("I was also raised in the nested scope."));
-                DomainEventTracker.Peek().Should().HaveCount(2);
+                DomainEventTracker.Peek().Should().HaveCount(2)
+                        .And.Subject.First().Should().BeOfType<TestEvent>()
+                        .Which.Value.Should().Be("I was raised in the nested scope.");
+                DomainEventTracker.Peek().Should().HaveCount(2)
+                        .And.Subject.Last().Should().BeOfType<TestEvent>()
+                        .Which.Value.Should().Be("I was also raised in the nested scope.");
             }
 
-            DomainEventTracker.Peek().Should().HaveCount(1);
+            DomainEventTracker.Peek().Should().HaveCount(1)
+                        .And.Subject.Single().Should().BeOfType<TestEvent>()
+                        .Which.Value.Should().Be("I was raised in the top scope.");
         }
 
         DomainEventTracker.Peek().Should().BeEmpty();
