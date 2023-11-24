@@ -3,8 +3,10 @@ using MinimalDomainEvents.Core;
 
 namespace MinimalDomainEvents.Dispatcher;
 
-public abstract class ScopedDomainEventDispatcher : IDomainEventDispatcher, IDisposable
+public abstract class ScopedDomainEventDispatcher : IDomainEventDispatcher
 {
+    public IDomainEventScope? Scope => _scope;
+
     private IDomainEventScope? _scope;
 
     protected ScopedDomainEventDispatcher()

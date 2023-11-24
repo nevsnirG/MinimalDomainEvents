@@ -5,7 +5,7 @@ namespace MinimalDomainEvents.Dispatcher.MediatR;
 
 public static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddMediatrDispatcher(this IServiceCollection services)
+    public static IServiceCollection AddMediatorDispatcher(this IServiceCollection services)
     {
         return services
             .AddScoped<IDomainEventDispatcher, MediatorDispatcher>()

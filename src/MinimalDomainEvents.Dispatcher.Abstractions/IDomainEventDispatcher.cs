@@ -1,6 +1,9 @@
-﻿namespace MinimalDomainEvents.Dispatcher;
+﻿using MinimalDomainEvents.Core;
 
-public interface IDomainEventDispatcher
+namespace MinimalDomainEvents.Dispatcher;
+
+public interface IDomainEventDispatcher : IDisposable
 {
+    IDomainEventScope? Scope { get; }
     Task DispatchAndClear();
 }
