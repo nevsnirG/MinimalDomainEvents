@@ -17,7 +17,15 @@ public static class DomainEventTracker
     internal static void ExitScope()
     {
         // TODO - Technically you could manually dispose of a parent scope while inside of a nested scope.
-        // In that case pop until the parent scope that was disposed manually is popped. 
+        // In that case pop until the parent scope that was disposed manually is popped?
+
+        // Technically the scope can be exited because the lifetime of a dependency managing the scope has ended.
+        // i.e. the ServiceProvider disposes of all disposable dependencies, one of which manages a scope.
+        // In that case, the asynclocal has not been initialized because the disposing of the dependency
+        // happens in a different async execution context. In that case, the original execution context has ended already
+        // and thus all scopes have implicitly been destroyed already.
+
+        //TODO - Hoe werkt dit met try/finally statements?
         _scopes.Value?.Pop();
     }
 

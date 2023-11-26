@@ -18,7 +18,6 @@ public class DomainEventDispatchBehavior<TRequest, TResponse> : IPipelineBehavio
         var response = await next();
 
         await _domainEventDispatcher.DispatchAndClear();
-        _domainEventDispatcher.Dispose();
 
         return response;
     }
