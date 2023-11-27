@@ -93,5 +93,5 @@ Contains the MediatorDispatcher, which dispatches the domain events using Mediat
 using MinimalDomainEvents.Dispatcher.MediatR;
 
 IServiceCollection services = new ServiceCollection();
-services.AddMediatrDispatcher();
+services.AddMediatorDispatcher();
 ```
