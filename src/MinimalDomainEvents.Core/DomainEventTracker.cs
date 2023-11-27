@@ -1,24 +1,22 @@
 ﻿using MinimalDomainEvents.Contract;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace MinimalDomainEvents.Core;
 
 public static class DomainEventTracker
 {
-    private static readonly AsyncLocal<Stack<WeakReference<DomainEventScope>>> _scopes = new();
+    private static readonly AsyncLocal<DomainEventScopeStack> _scopeStack = new();
 
     public static IDomainEventScope CreateScope()
     {
-        _scopes.Value ??= new Stack<WeakReference<DomainEventScope>>();
-        var newScope = new DomainEventScope();
-        _scopes.Value.Push(new WeakReference<DomainEventScope>(newScope, false));
+        var stack = GetOrCreateStack();
+        var newScope = new DomainEventScope(stack.Count + 1);
+        stack.Push(newScope);
         return newScope;
     }
 
-    internal static void ExitScope()
+    internal static void ExitScope(IDomainEventScope scope)
     {
-        // TODO - Technically you could manually dispose of a parent scope while inside of a nested scope.
-        // In that case pop until the parent scope that was disposed manually is popped?
-
         // Technically the scope can be exited because the lifetime of a dependency managing the scope has ended.
         // i.e. the ServiceProvider disposes of all disposable dependencies, one of which manages a scope.
         // In that case, the asynclocal has not been initialized because the disposing of the dependency
@@ -26,51 +24,40 @@ public static class DomainEventTracker
         // and thus all scopes have implicitly been destroyed already.
 
         //TODO - Hoe werkt dit met try/finally statements?
-        _scopes.Value?.Pop();
+        var stack = GetOrCreateStack();
+        var deepestScope = stack.Peek();
+        if (deepestScope == null || deepestScope.ID < scope.ID)
+            return;
+
+        var poppedScope = stack.Pop();
+        while (poppedScope!.ID > scope.ID)
+            poppedScope = stack.Pop();
+
     }
 
     public static void RaiseDomainEvent(IDomainEvent domainEvent)
     {
-        var deepestScopeRef = _scopes.Value!.Peek();
-
-        deepestScopeRef.IfRefIsStrong(
-            @do: strongRef => strongRef.RaiseDomainEvent(domainEvent),
-            @else: () => _scopes.Value.Pop()
-            );
+        var deepestScopeRef = GetOrCreateStack().Peek();
+        deepestScopeRef?.RaiseDomainEvent(domainEvent);
     }
 
     public static IReadOnlyCollection<IDomainEvent> Peek()
     {
-        if (_scopes.Value!.TryPeek(out var deepestScopeRef))
-        {
-            return deepestScopeRef.IfRefIsStrong(
-                @do: strongRef => strongRef.Peek(),
-                @else: () =>
-                {
-                    _scopes.Value.Pop();
-                    return Peek();
-                });
-        }
-        else
-            return EmptyCollection();
+        var deepestScopeRef = GetOrCreateStack().Peek();
+        return deepestScopeRef?.Peek() ?? EmptyCollection();
     }
 
     public static IReadOnlyCollection<IDomainEvent> GetAndClearEvents()
     {
-        if (_scopes.Value!.TryPeek(out var deepestScopeRef))
-        {
-            return deepestScopeRef.IfRefIsStrong(
-                @do: strongRef => strongRef.GetAndClearEvents(),
-                @else: () =>
-                {
-                    _scopes.Value.Pop();
-                    return GetAndClearEvents();
-                });
-        }
-        else
-            return EmptyCollection();
+        var deepestScopeRef = GetOrCreateStack().Peek();
+        return deepestScopeRef?.GetAndClearEvents() ?? EmptyCollection();
     }
 
     private static IReadOnlyCollection<IDomainEvent> EmptyCollection() =>
         new List<IDomainEvent>(0).AsReadOnly();
+
+    private static DomainEventScopeStack GetOrCreateStack()
+    {
+        return _scopeStack.Value ??= new DomainEventScopeStack();
+    }
 }
