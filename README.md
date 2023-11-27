@@ -90,7 +90,7 @@ Contains the MediatorDispatcher, which dispatches the domain events using Mediat
 
 #### Usage (Microsoft.Extensions.DependencyInjection)
 ```csharp
-using MinimalDomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection;
+using MinimalDomainEvents.Dispatcher.MediatR;
 
 IServiceCollection services = new ServiceCollection();
 services.AddMediatrDispatcher();
