@@ -1,5 +1,5 @@
 # MinimalDomainEvents
-Minimal impact domain event raising and dispatching framework leveraging AsyncLocal to scope and track domain events raised from your domain model across threads. This allows for the tracking of domain events raised in an entity, without the need for exposing a public collection of domain events on the entity, which needs to be (manually) tracked. Domain events are always raised in the current active scope. The current active scope is the deepest scope active where the entity resides in.
+Minimal impact domain event raising and dispatching framework leveraging AsyncLocal to scope and track domain events raised from your domain model across the asynchronous execution context. This allows for the tracking of domain events raised in an entity, without the need for exposing a public collection of domain events on the entity, which needs to be (manually) tracked. Domain events are always raised in the current active scope. The current active scope is the deepest scope active where the entity resides in.
 
 ## Packages
 ### MinimalDomainEvents.Contract
