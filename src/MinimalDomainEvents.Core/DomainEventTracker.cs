@@ -1,5 +1,4 @@
 ﻿using MinimalDomainEvents.Contract;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace MinimalDomainEvents.Core;
 
