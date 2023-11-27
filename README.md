@@ -88,20 +88,9 @@ internal sealed ScopedDomainEventDispatcherImpl : ScopedDomainEventDispatcher { 
 ### MinimalDomainEvents.Dispatcher.MediatR
 Contains the MediatorDispatcher, which dispatches the domain events using MediatR, as well as the DomainEventDispatchBehavior. The behavior uses the lifetime of the MediatorDispatcher to capture raised domain events during its lifetime and dispatches them when the RequestHandlerDelegate completes successfully. Make sure your domain events implement both IDomainEvent and INotification.
 
-#### Example (Microsoft.Extensions.DependencyInjection)
+#### Usage (Microsoft.Extensions.DependencyInjection)
 ```csharp
-return services
-    .AddScoped<IDomainEventDispatcher, MediatorDispatcher>()
-    .AddScoped(typeof(IPipelineBehavior<,>), typeof(DomainEventDispatchBehavior<,>))
-    ;
-```
-
-### MinimalDomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection
-IServiceCollection extension method for registering the MediatorDispatcher and DomainEventDispatchBehavior.
-
-#### Example
-```csharp
-using MinimalDomainEvents.Dispatcher.MediatR.MicrosoftDependencyInjection;
+using MinimalDomainEvents.Dispatcher.MediatR;
 
 IServiceCollection services = new ServiceCollection();
 services.AddMediatrDispatcher();
