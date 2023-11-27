@@ -3,7 +3,7 @@ using MinimalDomainEvents.Core;
 
 namespace MinimalDomainEvents.Dispatcher.MediatR;
 
-public class DomainEventDispatchBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal sealed class DomainEventDispatchBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly IDomainEventDispatcher _domainEventDispatcher;

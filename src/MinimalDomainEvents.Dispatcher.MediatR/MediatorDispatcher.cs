@@ -3,7 +3,7 @@ using MinimalDomainEvents.Contract;
 
 namespace MinimalDomainEvents.Dispatcher.MediatR;
 
-public class MediatorDispatcher : ScopedDomainEventDispatcher
+internal sealed class MediatorDispatcher : ScopedDomainEventDispatcher
 {
     private readonly IMediator _mediator;
 
