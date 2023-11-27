@@ -61,7 +61,7 @@ public class DomainEventTrackerTests
     }
 
     [Fact(DisplayName = "A higher scope disposed in a deeper scope will cascade disposing of all deeper scopes.")]
-    public void DisposingAHigherScopeInADeeperScopeDisposedAllDeeperScope()
+    public void DisposingAHigherScopeInADeeperScopeDisposesAllDeeperScope()
     {
         using var topScope = DomainEventTracker.CreateScope();
         topScope.RaiseDomainEvent(new TestEvent("I was raised in the top scope."));
