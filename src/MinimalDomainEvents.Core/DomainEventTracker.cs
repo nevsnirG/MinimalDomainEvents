@@ -16,12 +16,6 @@ public static class DomainEventTracker
 
     internal static void ExitScope(IDomainEventScope scope)
     {
-        // Technically the scope can be exited because the lifetime of a dependency managing the scope has ended.
-        // i.e. the ServiceProvider disposes of all disposable dependencies, one of which manages a scope.
-        // In that case, the asynclocal has not been initialized because the disposing of the dependency
-        // happens in a different async execution context. In that case, the original execution context has ended already
-        // and thus all scopes have implicitly been destroyed already.
-
         var stack = GetOrCreateStack();
         var deepestScope = stack.Peek();
         if (deepestScope == null || deepestScope.ID < scope.ID)
