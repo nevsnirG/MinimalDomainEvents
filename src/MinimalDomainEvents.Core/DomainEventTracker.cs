@@ -22,7 +22,6 @@ public static class DomainEventTracker
         // happens in a different async execution context. In that case, the original execution context has ended already
         // and thus all scopes have implicitly been destroyed already.
 
-        //TODO - Hoe werkt dit met try/finally statements?
         var stack = GetOrCreateStack();
         var deepestScope = stack.Peek();
         if (deepestScope == null || deepestScope.ID < scope.ID)
@@ -31,7 +30,6 @@ public static class DomainEventTracker
         var poppedScope = stack.Pop();
         while (poppedScope!.ID > scope.ID)
             poppedScope = stack.Pop();
-
     }
 
     public static void RaiseDomainEvent(IDomainEvent domainEvent)
