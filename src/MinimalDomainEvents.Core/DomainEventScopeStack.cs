@@ -3,19 +3,19 @@
 internal sealed class DomainEventScopeStack
 {
     public int Count => _scopeStack.Count;
-    private readonly Stack<WeakReference<DomainEventScope>> _scopeStack;
+    private readonly Stack<WeakReference<IDomainEventScope>> _scopeStack;
 
     public DomainEventScopeStack()
     {
         _scopeStack = new();
     }
 
-    public void Push(DomainEventScope scope)
+    public void Push(IDomainEventScope scope)
     {
         _scopeStack.Push(new(scope, false));
     }
 
-    public DomainEventScope? Peek()
+    public IDomainEventScope? Peek()
     {
         if (_scopeStack.TryPeek(out var deepestScopeRef))
         {
@@ -31,7 +31,7 @@ internal sealed class DomainEventScopeStack
             return null;
     }
 
-    public DomainEventScope? Pop()
+    public IDomainEventScope? Pop()
     {
         if (_scopeStack.TryPop(out var deepestScopeRef))
         {

@@ -4,7 +4,7 @@ namespace MinimalDomainEvents.Core;
 
 public interface IDomainEventScope : IDisposable
 {
-    int ID { get; }
+    int Id { get; }
     IReadOnlyCollection<IDomainEvent> GetAndClearEvents();
     IReadOnlyCollection<IDomainEvent> Peek();
     void RaiseDomainEvent(IDomainEvent domainEvent);
@@ -12,13 +12,13 @@ public interface IDomainEventScope : IDisposable
 
 internal sealed class DomainEventScope : IDomainEventScope
 {
-    public int ID { get; }
+    public int Id { get; }
 
     private List<IDomainEvent> _domainEvents = new();
 
     internal DomainEventScope(int id)
     {
-        ID = id;
+        Id = id;
     }
 
     public void RaiseDomainEvent(IDomainEvent domainEvent)

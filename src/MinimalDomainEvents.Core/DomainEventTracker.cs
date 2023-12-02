@@ -18,11 +18,11 @@ public static class DomainEventTracker
     {
         var stack = GetOrCreateStack();
         var deepestScope = stack.Peek();
-        if (deepestScope == null || deepestScope.ID < scope.ID)
+        if (deepestScope == null || deepestScope.Id < scope.Id)
             return;
 
         var poppedScope = stack.Pop();
-        while (poppedScope!.ID > scope.ID)
+        while (poppedScope!.Id > scope.Id)
             poppedScope = stack.Pop();
     }
 
