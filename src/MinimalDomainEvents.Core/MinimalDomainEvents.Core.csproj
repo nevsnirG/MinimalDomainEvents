@@ -12,7 +12,26 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Title>MinimalDomainEvents.Core</Title>
+		<Description>Minimal impact domain event raising and dispatching framework.</Description>
+		<PackageProjectUrl>https://github.com/nevsnirG/MinimalDomainEvents</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/nevsnirG/MinimalDomainEvents</RepositoryUrl>
+		<PackageTags>Domain events</PackageTags>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\MinimalDomainEvents.Contract\MinimalDomainEvents.Contract.csproj" />
