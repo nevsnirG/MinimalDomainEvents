@@ -9,7 +9,7 @@ public static class IServiceCollectionExtensions
     {
         return services
             .AddScoped<IDomainEventDispatcher, MediatorDispatcher>()
-            .AddScoped(typeof(IPipelineBehavior<,>), typeof(DomainEventDispatchBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(DomainEventDispatchBehavior<,>))
             ;
     }
 }

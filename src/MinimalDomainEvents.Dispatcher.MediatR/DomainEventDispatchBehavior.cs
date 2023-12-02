@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MinimalDomainEvents.Core;
 
 namespace MinimalDomainEvents.Dispatcher.MediatR;
 
