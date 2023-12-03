@@ -9,7 +9,14 @@ public static class DomainEventTracker
     public static IDomainEventScope CreateScope()
     {
         var stack = GetOrCreateStack();
-        var newScope = new DomainEventScope(stack.Count + 1);
+        var parentScope = stack.Peek();
+
+        var newScopeId = stack.Count + 1;
+        var newScope = new DomainEventScope(newScopeId);
+
+        if (parentScope is not null)
+            ((DomainEventScope)parentScope).Child = newScope;
+
         stack.Push(newScope);
         return newScope;
     }

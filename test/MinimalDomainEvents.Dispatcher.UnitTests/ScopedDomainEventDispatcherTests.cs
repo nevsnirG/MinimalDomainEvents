@@ -1,41 +1,57 @@
 using FluentAssertions;
 using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Core;
-using System.Runtime.CompilerServices;
 
 namespace MinimalDomainEvents.Dispatcher.UnitTests;
 
 public class ScopedDomainEventDispatcherTests
 {
     [Fact(DisplayName = "Domain events raised using the DomainEventTracker register the events on the deepest active scope")]
-    public async Task DomainEventsRegisteredWhileScopeIsActiveRegisterOnTheScope()
+    public async Task DomainEventsRaisedWhileScopeIsActiveRegisterOnTheScope()
     {
-        using var scopedDispatcher = new TestDispatcher();
+        var testDispatcher = new TestDispatcher();
+        using var scopedDispatcher = new ScopedDomainEventDispatcher(new[] { testDispatcher });
         var topLevelClass = new TopLevelClass(scopedDispatcher, new NestedClass(new DeepestClass()));
         topLevelClass.RaiseDomainEvent();
         await scopedDispatcher.DispatchAndClear();
-        scopedDispatcher.DomainEvents.Should().HaveCount(1);
+        testDispatcher.DomainEvents.Should().HaveCount(1);
     }
 
     [Fact(DisplayName = "Domain events raised while the scoped dispatcher is active are not available once it falls out of scope")]
-    public async Task DomainEventsRegisteredWhileScopeIsAreNotVisibleOutsideOfScope()
+    public async Task DomainEventsRaisedWhileScopeIsAreNotVisibleOutsideOfScope()
     {
-        using (var scopedDispatcher = new TestDispatcher())
+        var testDispatcher = new TestDispatcher();
+        using (var scopedDispatcher = new ScopedDomainEventDispatcher(new[] { testDispatcher }))
         {
             var topLevelClass = new TopLevelClass(scopedDispatcher, new NestedClass(new DeepestClass()));
             topLevelClass.RaiseDomainEvent();
             await scopedDispatcher.DispatchAndClear();
-            scopedDispatcher.DomainEvents.Should().HaveCount(1);
+            testDispatcher.DomainEvents.Should().HaveCount(1);
         }
 
         DomainEventTracker.Peek().Should().HaveCount(0);
     }
 
-    private sealed class TestDispatcher : ScopedDomainEventDispatcher
+    [Fact(DisplayName = "Domain events raised in a nested scope are available when dispatching events from a higher scope")]
+    public async Task DomainEventsRaisedInANestedScopeAreDispatched()
+    {
+        var testDispatcher = new TestDispatcher();
+        using var scopedDispatcher = new ScopedDomainEventDispatcher(new[] { testDispatcher });
+        DomainEventTracker.RaiseDomainEvent(new TestEvent("I was raised in the deepest scope."));
+        using (var nestedScope = DomainEventTracker.CreateScope())
+        {
+            nestedScope.RaiseDomainEvent(new TestEvent("I was raised in the deepest scope."));
+        }
+
+        await scopedDispatcher.DispatchAndClear();
+        testDispatcher.DomainEvents.Should().HaveCount(2);
+    }
+
+    private sealed class TestDispatcher : IDispatchDomainEvents
     {
         public IReadOnlyCollection<IDomainEvent>? DomainEvents { get; private set; }
 
-        protected override Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents)
+        public Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents)
         {
             DomainEvents = domainEvents;
             return Task.CompletedTask;
@@ -44,7 +60,9 @@ public class ScopedDomainEventDispatcherTests
 
     private class TopLevelClass
     {
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly IDomainEventDispatcher _dispatcher;
+#pragma warning restore IDE0052 // Remove unread private members
         private readonly NestedClass _nestedDependency;
 
         public TopLevelClass(IDomainEventDispatcher dispatcher, NestedClass nestedDependency)
@@ -76,7 +94,9 @@ public class ScopedDomainEventDispatcherTests
 
     private class DeepestClass
     {
+#pragma warning disable CA1822 // Mark members as static
         public void RaiseDomainEvent()
+#pragma warning restore CA1822 // Mark members as static
         {
             DomainEventTracker.RaiseDomainEvent(new TestEvent());
         }

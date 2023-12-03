@@ -10,9 +10,10 @@ public interface IDomainEventScope : IDisposable
     void RaiseDomainEvent(IDomainEvent domainEvent);
 }
 
-internal sealed class DomainEventScope : IDomainEventScope
+internal sealed record class DomainEventScope : IDomainEventScope
 {
     public int Id { get; }
+    internal IDomainEventScope? Child { get; set; }
 
     private List<IDomainEvent> _domainEvents = new();
 
@@ -33,7 +34,11 @@ internal sealed class DomainEventScope : IDomainEventScope
 
     public IReadOnlyCollection<IDomainEvent> GetAndClearEvents()
     {
-        var events = _domainEvents.AsReadOnly() ?? new List<IDomainEvent>().AsReadOnly();
+        var events = new List<IDomainEvent>(_domainEvents);
+
+        if (Child is not null)
+            events.AddRange(Child.GetAndClearEvents());
+
         _domainEvents = new List<IDomainEvent>();
         return events;
     }

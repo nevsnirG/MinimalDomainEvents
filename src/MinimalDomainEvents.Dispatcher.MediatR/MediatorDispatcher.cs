@@ -3,7 +3,7 @@ using MinimalDomainEvents.Contract;
 
 namespace MinimalDomainEvents.Dispatcher.MediatR;
 
-internal sealed class MediatorDispatcher : ScopedDomainEventDispatcher
+internal sealed class MediatorDispatcher : IDispatchDomainEvents
 {
     private readonly IMediator _mediator;
 
@@ -12,7 +12,7 @@ internal sealed class MediatorDispatcher : ScopedDomainEventDispatcher
         _mediator = mediator;
     }
 
-    protected override async Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents)
+    public async Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents)
     {
         foreach (var domainEvent in domainEvents)
         {
