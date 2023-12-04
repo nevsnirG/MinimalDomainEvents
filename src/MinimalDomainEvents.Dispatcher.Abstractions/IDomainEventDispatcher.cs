@@ -1,7 +1,7 @@
 ﻿using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Core;
 
-namespace MinimalDomainEvents.Dispatcher;
+namespace MinimalDomainEvents.Dispatcher.Abstractions;
 
 public interface IDomainEventDispatcher : IDisposable
 {

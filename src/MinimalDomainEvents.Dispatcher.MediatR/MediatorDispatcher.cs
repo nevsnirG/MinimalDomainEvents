@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MinimalDomainEvents.Contract;
+using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher.MediatR;
 

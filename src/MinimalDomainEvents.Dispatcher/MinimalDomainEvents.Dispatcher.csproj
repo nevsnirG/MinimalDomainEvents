@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<PackageId>MinimalDomainEvents.Dispatcher.Abstractions</PackageId>
-		<Version>0.1.1-alpha</Version>
+		<PackageId>MinimalDomainEvents.Dispatcher</PackageId>
+		<Version>0.3.0-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
-		
+
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Title>MinimalDomainEvents.Dispatcher.Abstractions</Title>
-		<Description>Domain event dispatcher abstractions.</Description>
+		<Title>MinimalDomainEvents.Dispatcher</Title>
+		<Description>Core for dispatching of domain events.</Description>
 		<PackageProjectUrl>https://github.com/nevsnirG/MinimalDomainEvents</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/nevsnirG/MinimalDomainEvents</RepositoryUrl>
@@ -34,11 +34,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\MinimalDomainEvents.Core\MinimalDomainEvents.Core.csproj" />
+		<ProjectReference Include="..\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher;
 public static class DependencyInjectionConfiguration

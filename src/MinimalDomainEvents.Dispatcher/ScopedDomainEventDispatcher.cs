@@ -1,5 +1,6 @@
 ﻿using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Core;
+using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher;
 
@@ -24,7 +25,7 @@ public sealed class ScopedDomainEventDispatcher : IDomainEventDispatcher
 
     public async Task DispatchAndClear()
     {
-        var domainEvents = _scope?.GetAndClearEvents();
+        var domainEvents = _scope!.GetAndClearEvents();
 
         if (domainEvents is null || domainEvents.Count == 0)
             return;

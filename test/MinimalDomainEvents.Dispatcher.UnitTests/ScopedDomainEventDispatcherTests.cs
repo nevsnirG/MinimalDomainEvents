@@ -1,6 +1,7 @@
 using FluentAssertions;
 using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Core;
+using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher.UnitTests;
 

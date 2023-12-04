@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Dispatcher.MediatR</PackageId>
-		<Version>0.1.2-alpha</Version>
+		<Version>0.1.4-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 		
@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MinimalDomainEvents.Dispatcher\MinimalDomainEvents.Dispatcher.csproj" />
+	  <ProjectReference Include="..\MinimalDomainEvents.Dispatcher\MinimalDomainEvents.Dispatcher.csproj" />
 	</ItemGroup>
 
 </Project>
