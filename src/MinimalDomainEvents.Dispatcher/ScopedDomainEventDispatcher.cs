@@ -4,7 +4,7 @@ using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher;
 
-public sealed class ScopedDomainEventDispatcher : IDomainEventDispatcher
+internal sealed class ScopedDomainEventDispatcher : IDomainEventDispatcher
 {
     public IDomainEventScope? Scope => _scope;
 
