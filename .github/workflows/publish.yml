@@ -1,4 +1,4 @@
-name: Push MinimalRichDomain.SourceGenerators to NuGet
+name: Push MinimalDomainEvents packages to NuGet
 
 on:
   push:
@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "master" ]
 
-env:
-    SOLUTION_PATH: src\\MinimalDomainEvents.sln
-    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,10 +16,10 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v1
     - name: Build
-      run: dotnet build $SOLUTION_PATH -c Release
+      run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release --no-build
     - name: Package
-      run: dotnet pack $SOLUTION_PATH -c Release --no-build --output .
+      run: dotnet pack -c Release --no-build --output .
     - name: Push to NuGet
       run: dotnet nuget push "*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json --skip-duplicate

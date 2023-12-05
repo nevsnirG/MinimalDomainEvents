@@ -54,44 +54,15 @@ DomainEventTracker.Peek().Should().BeEmpty();
 
 
 ### MinimalDomainEvents.Dispatcher
-Holds the abstract ScopedDomainEventDispatcher class which creates a scope on construction, used for scoping the raising of domain events to the lifetime of this class.
-
-#### Example
-```csharp
-IServiceCollection services = new ServiceCollection();
-services.AddScoped<IDomainEventDispatcher, ScopedDomainEventDispatcherImpl>();
-var serviceProvider = services.BuildServiceProvider();
-var controller = serviceProvider.GetRequiredService<Controller>();
-
-internal sealed class Controller
-{
-    // Make sure this is registered as either transient or scoped, so that the scope
-    // will no longer exist in the tracker when the lifetime ends.
-    private readonly IDomainEventDispatcher _dispatcher;
-
-    public async Task DoSomethingWithEntities()
-    {
-        var user = await GetUserById(id);
-        user.DoOperationThatRaisesDomainEvents();
-        user.DoOtherOperationThatAlsoRaisesDomainEvents();
-
-        // All domain events raised inside entities that were instantiated in this scope or a nested scope
-        // will register to the lifetime scope of the ScopedDomainEventDispatcherImpl and thus be dispatched
-        // when DispatchAndClear is called.
-        await _dispatcher.DispatchAndClear();
-    }
-}
-
-internal sealed ScopedDomainEventDispatcherImpl : ScopedDomainEventDispatcher { ... }
-```
+Holds the ScopedDomainEventDispatcher class which creates a scope on construction, used for scoping the raising of domain events to the lifetime of this class. Resolves all registered IDomainEventDispatcher interface implementations for dispatching the raised domain events. Dispatches all domain events raised in its own scope or deeper scopes.
 
 ### MinimalDomainEvents.Dispatcher.MediatR
-Contains the MediatorDispatcher, which dispatches the domain events using MediatR, as well as the DomainEventDispatchBehavior. The behavior uses the lifetime of the MediatorDispatcher to capture raised domain events during its lifetime and dispatches them when the RequestHandlerDelegate completes successfully. Make sure your domain events implement both IDomainEvent and INotification.
+Contains the MediatorDispatcher, which dispatches the domain events using MediatR. The behavior uses the lifetime of the ScopedDomainEventDispatcher to capture raised domain events during its lifetime and dispatches them when the RequestHandlerDelegate completes successfully. Make sure your domain events implement both IDomainEvent and INotification.
 
 #### Usage (Microsoft.Extensions.DependencyInjection)
 ```csharp
 using MinimalDomainEvents.Dispatcher.MediatR;
 
 IServiceCollection services = new ServiceCollection();
-services.AddMediatorDispatcher();
+services.AddDomainEventDispatcher(b => b.AddMediatorDispatcher());
 ```
