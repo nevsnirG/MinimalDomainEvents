@@ -3,8 +3,8 @@ name: Push MinimalDomainEvents packages to NuGet
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'src'
 
 jobs:
   build:
