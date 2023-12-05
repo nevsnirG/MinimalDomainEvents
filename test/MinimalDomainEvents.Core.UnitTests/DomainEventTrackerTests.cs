@@ -1,6 +1,3 @@
-using FluentAssertions;
-using MinimalDomainEvents.Contract;
-
 namespace MinimalDomainEvents.Core.UnitTests;
 
 public class DomainEventTrackerTests

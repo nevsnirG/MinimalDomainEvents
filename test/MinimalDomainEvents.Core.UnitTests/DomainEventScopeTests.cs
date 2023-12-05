@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-using MinimalDomainEvents.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MinimalDomainEvents.Core.UnitTests;
+﻿namespace MinimalDomainEvents.Core.UnitTests;
 public class DomainEventScopeTests
 {
     [Fact(DisplayName = "Domain events raised inside of a scope are accessible inside of that scope")]
