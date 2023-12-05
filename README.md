@@ -54,7 +54,7 @@ DomainEventTracker.Peek().Should().BeEmpty();
 
 
 ### MinimalDomainEvents.Dispatcher
-Holds the ScopedDomainEventDispatcher class which creates a scope on construction, used for scoping the raising of domain events to the lifetime of this class. Resolves all registered IDomainEventDispatcher interface implementations for dispatching the raised domain events. Dispatches all domain events raised in its own scope or deeper scopes.
+Holds the ScopedDomainEventDispatcher class which creates a scope on construction, used for scoping the raising of domain events to the lifetime of this class. Resolves all registered IDispatchDomainEvents interface implementations for dispatching the raised domain events. Dispatches all domain events raised in its own scope or deeper scopes.
 
 ### MinimalDomainEvents.Dispatcher.MediatR
 Contains the MediatorDispatcher, which dispatches the domain events using MediatR. The behavior uses the lifetime of the ScopedDomainEventDispatcher to capture raised domain events during its lifetime and dispatches them when the RequestHandlerDelegate completes successfully. Make sure your domain events implement both IDomainEvent and INotification.
