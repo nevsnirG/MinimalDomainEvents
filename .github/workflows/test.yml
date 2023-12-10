@@ -5,6 +5,7 @@ on:
     branches: [ "master" ]
     paths:
       - 'test/**'
+      - 'src/**'
 
 jobs:
   build:
