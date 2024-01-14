@@ -13,7 +13,7 @@ internal sealed class DomainEventDispatcherMiddleware : IMiddleware
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        await next();
+        await next(context);
         await _domainEventDispatcher.DispatchAndClear();
     }
 }
