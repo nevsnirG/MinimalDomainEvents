@@ -60,11 +60,11 @@ public class ScopedDomainEventDispatcherTests
     private class TopLevelClass
     {
 #pragma warning disable IDE0052 // Remove unread private members
-        private readonly IDomainEventDispatcher _dispatcher;
+        private readonly IScopedDomainEventDispatcher _dispatcher;
 #pragma warning restore IDE0052 // Remove unread private members
         private readonly NestedClass _nestedDependency;
 
-        public TopLevelClass(IDomainEventDispatcher dispatcher, NestedClass nestedDependency)
+        public TopLevelClass(IScopedDomainEventDispatcher dispatcher, NestedClass nestedDependency)
         {
             _dispatcher = dispatcher;
             _nestedDependency = nestedDependency;
