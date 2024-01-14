@@ -6,6 +6,8 @@ using MongoDB.Driver;
 namespace MinimalDomainEvents.Outbox.MongoDb;
 internal sealed class MongoDbDomainEventPersister : IPersistDomainEvents
 {
+    private const string CollectionName = "OutboxRecords";
+
     private readonly OutboxSettings _outboxSettings;
     private readonly MongoClient _mongoClient;
 
@@ -18,7 +20,7 @@ internal sealed class MongoDbDomainEventPersister : IPersistDomainEvents
     public async Task Persist(IReadOnlyCollection<IDomainEvent> domainEvents)
     {
         var database = _mongoClient.GetDatabase(_outboxSettings.DatabaseName);
-        var outboxCollection = database.GetCollection<OutboxRecord>("OutboxRecords");
+        var outboxCollection = database.GetCollection<OutboxRecord>(CollectionName);
 
         if(_outboxSettings.SendBatched)
             await PersistBatched(outboxCollection, domainEvents);
