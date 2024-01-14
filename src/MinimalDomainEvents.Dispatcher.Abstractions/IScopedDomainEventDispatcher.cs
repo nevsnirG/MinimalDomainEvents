@@ -3,7 +3,7 @@ using MinimalDomainEvents.Core;
 
 namespace MinimalDomainEvents.Dispatcher.Abstractions;
 
-public interface IDomainEventDispatcher : IDisposable
+public interface IScopedDomainEventDispatcher : IDisposable
 {
     IDomainEventScope? Scope { get; }
     void RaiseDomainEvent(IDomainEvent domainEvent);

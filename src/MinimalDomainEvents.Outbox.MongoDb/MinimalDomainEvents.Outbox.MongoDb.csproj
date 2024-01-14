@@ -1,17 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<PackageId>MinimalDomainEvents.Outbox.Abstractions</PackageId>
+		<Version>0.1.0-alpha</Version>
+		<Authors>Ken van Grinsven</Authors>
+		<Company>Grinsven Software Solutions</Company>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Title>MinimalDomainEvents.Outbox.MongoDb</Title>
+		<Description>MongoDb outbox implementation.</Description>
+		<PackageProjectUrl>https://github.com/nevsnirG/MinimalDomainEvents</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/nevsnirG/MinimalDomainEvents</RepositoryUrl>
+		<PackageTags>Domain events</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<IsPackable>true</IsPackable>
 
-  <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
-  </ItemGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MinimalDomainEvents.Outbox.Abstractions\MinimalDomainEvents.Outbox.Abstractions.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MinimalDomainEvents.Outbox.Abstractions\MinimalDomainEvents.Outbox.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -6,9 +6,9 @@ namespace MinimalDomainEvents.Dispatcher.MediatR;
 internal sealed class DomainEventDispatchBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    private readonly IDomainEventDispatcher _domainEventDispatcher;
+    private readonly IScopedDomainEventDispatcher _domainEventDispatcher;
 
-    public DomainEventDispatchBehavior(IDomainEventDispatcher domainEventDispatcher)
+    public DomainEventDispatchBehavior(IScopedDomainEventDispatcher domainEventDispatcher)
     {
         _domainEventDispatcher = domainEventDispatcher;
     }

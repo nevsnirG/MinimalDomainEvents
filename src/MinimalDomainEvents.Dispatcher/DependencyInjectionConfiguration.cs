@@ -11,7 +11,7 @@ public static class DependencyInjectionConfiguration
 
     public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services, Action<IDomainEventDispatcherBuilder>? configure)
     {
-        services.AddScoped<IDomainEventDispatcher, ScopedDomainEventDispatcher>();
+        services.AddScoped<IScopedDomainEventDispatcher, ScopedDomainEventDispatcher>();
 
         if (configure is not null)
         {
