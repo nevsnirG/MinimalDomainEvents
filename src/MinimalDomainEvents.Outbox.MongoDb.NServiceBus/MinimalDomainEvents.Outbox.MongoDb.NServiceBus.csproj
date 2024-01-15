@@ -1,17 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<PackageId>MinimalDomainEvents.Outbox.MongoDb.NServiceBus</PackageId>
+		<Version>0.1.0-alpha</Version>
+		<Authors>Ken van Grinsven</Authors>
+		<Company>Grinsven Software Solutions</Company>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Title>MinimalDomainEvents.Outbox.MongoDb.NServiceBus</Title>
+		<Description>Transaction session provider for NServiceBus synchronized storage sessions.</Description>
+		<PackageProjectUrl>https://github.com/nevsnirG/MinimalDomainEvents</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/nevsnirG/MinimalDomainEvents</RepositoryUrl>
+		<PackageTags>Domain events</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<IsPackable>true</IsPackable>
 
-  <ItemGroup>
-    <PackageReference Include="NServiceBus.Storage.MongoDB" Version="3.0.2" />
-  </ItemGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MinimalDomainEvents.Outbox.MongoDb\MinimalDomainEvents.Outbox.MongoDb.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NServiceBus.Storage.MongoDB" Version="3.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MinimalDomainEvents.Outbox.MongoDb\MinimalDomainEvents.Outbox.MongoDb.csproj" />
+	</ItemGroup>
 
 </Project>
