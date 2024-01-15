@@ -8,10 +8,10 @@ using MongoDB.Driver.Linq;
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
 
 [Collection("MongoDb Integration")]
-public class IOutboxDispatcherBuilderExtensionsTests(MongoContainerFixture fixture)
+public class OutboxBuilderExtensionsTests(MongoContainerFixture fixture)
 {
     [Fact]
-    public async Task WithDatabase_AfterUseMongo_StillWorks()
+    public async Task WithDatabase_After_UseMongo_Works()
     {
         var mongoClient = new MongoClient(fixture.ConnectionString);
         IServiceCollection serviceCollection = new ServiceCollection();
