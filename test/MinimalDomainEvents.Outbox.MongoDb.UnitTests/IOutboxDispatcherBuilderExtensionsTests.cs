@@ -1,6 +1,5 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MongoDB.Driver;
@@ -8,7 +7,7 @@ using MongoDB.Driver.Linq;
 
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
 
-[CollectionDefinition("MongoDb Integration")]
+[Collection("MongoDb Integration")]
 public class IOutboxDispatcherBuilderExtensionsTests(MongoContainerFixture fixture)
 {
     [Fact]
@@ -25,17 +24,15 @@ public class IOutboxDispatcherBuilderExtensionsTests(MongoContainerFixture fixtu
             });
         });
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        var persister = serviceProvider.GetRequiredService<IPersistDomainEvents>();
+        var persister = serviceProvider.GetRequiredService<IPersistOutboxRecords>();
 
-        await persister.Persist(new List<IDomainEvent>(1)
+        await persister.PersistIndividually(new List<OutboxRecord>(1)
         {
-            new TestEvent()
+            new(DateTimeOffset.UtcNow, [])
         });
 
         var outboxCollection = mongoClient.GetDatabase("testdatabase").GetCollection<OutboxRecord>("OutboxRecords");
         var item = await outboxCollection.AsQueryable().SingleOrDefaultAsync();
         item.Should().NotBeNull();
     }
-
-    public sealed record TestEvent() : IDomainEvent;
 }

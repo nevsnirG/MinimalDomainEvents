@@ -1,15 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<PackageId>MinimalDomainEvents.Outbox.MongoDb</PackageId>
+		<PackageId>MinimalDomainEvents.Outbox</PackageId>
 		<Version>0.1.0-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Title>MinimalDomainEvents.Outbox.MongoDb</Title>
-		<Description>MongoDb outbox implementation.</Description>
+		<Title>MinimalDomainEvents.Outbox</Title>
+		<Description>Outbox dispatching.</Description>
 		<PackageProjectUrl>https://github.com/nevsnirG/MinimalDomainEvents</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/nevsnirG/MinimalDomainEvents</RepositoryUrl>
@@ -24,21 +24,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\README.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.MongoDB.UnitTests" />
+		<PackageReference Include="protobuf-net" Version="3.2.30" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MongoDB.Driver" Version="2.23.1" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<ProjectReference Include="..\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj" />
 		<ProjectReference Include="..\MinimalDomainEvents.Outbox.Abstractions\MinimalDomainEvents.Outbox.Abstractions.csproj" />
 	</ItemGroup>
 

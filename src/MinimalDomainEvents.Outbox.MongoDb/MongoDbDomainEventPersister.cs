@@ -1,10 +1,9 @@
-﻿using MinimalDomainEvents.Contract;
-using MinimalDomainEvents.Outbox.Abstractions;
+﻿using MinimalDomainEvents.Outbox.Abstractions;
 using MongoDB.Driver;
 
-//TODO - Transactions aan/uit zetten
+//TODO - Turn transactions on/off.
 namespace MinimalDomainEvents.Outbox.MongoDb;
-internal sealed class MongoDbDomainEventPersister : IPersistDomainEvents
+internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
 {
     private const string CollectionName = "OutboxRecords";
 
@@ -17,30 +16,35 @@ internal sealed class MongoDbDomainEventPersister : IPersistDomainEvents
         _mongoClient = mongoClient;
     }
 
-    public async Task Persist(IReadOnlyCollection<IDomainEvent> domainEvents)
+    public async Task PersistIndividually(IReadOnlyCollection<OutboxRecord> outboxRecords)
+    {
+        ArgumentNullException.ThrowIfNull(outboxRecords);
+        if (outboxRecords.Count == 0)
+            return;
+
+        var outboxCollection = GetOutboxCollection();
+        await PersistIndividually(outboxCollection, outboxRecords);
+    }
+
+    public async Task PersistBatched(OutboxRecord outboxRecord)
+    {
+        ArgumentNullException.ThrowIfNull(outboxRecord);
+
+        var outboxCollection = GetOutboxCollection();
+        await outboxCollection.InsertOneAsync(outboxRecord);
+    }
+
+    private IMongoCollection<OutboxRecord> GetOutboxCollection()
     {
         var database = _mongoClient.GetDatabase(_outboxSettings.DatabaseName);
-        var outboxCollection = database.GetCollection<OutboxRecord>(CollectionName);
-
-        if(_outboxSettings.SendBatched)
-            await PersistBatched(outboxCollection, domainEvents);
-        else
-            await PersistIndividually(outboxCollection, domainEvents);
+        return database.GetCollection<OutboxRecord>(CollectionName);
     }
 
-    private static Task PersistBatched(IMongoCollection<OutboxRecord> outboxCollection, IReadOnlyCollection<IDomainEvent> domainEvents)
+    private static Task PersistIndividually(IMongoCollection<OutboxRecord> outboxCollection, IReadOnlyCollection<OutboxRecord> outboxRecords)
     {
-        var outboxRecord = new OutboxRecord(DateTimeOffset.UtcNow, domainEvents);
-        return outboxCollection.InsertOneAsync(outboxRecord);
-    }
-
-    private static Task PersistIndividually(IMongoCollection<OutboxRecord> outboxCollection, IReadOnlyCollection<IDomainEvent> domainEvents)
-    {
-        var enqueuedAt = DateTimeOffset.UtcNow;
-        var writes = new List<InsertOneModel<OutboxRecord>>(domainEvents.Count);
-        foreach (var domainEvent in domainEvents)
+        var writes = new List<InsertOneModel<OutboxRecord>>(outboxRecords.Count);
+        foreach (var outboxRecord in outboxRecords)
         {
-            var outboxRecord = new OutboxRecord(enqueuedAt, domainEvent);
             var writeModel = new InsertOneModel<OutboxRecord>(outboxRecord);
             writes.Add(writeModel);
         }

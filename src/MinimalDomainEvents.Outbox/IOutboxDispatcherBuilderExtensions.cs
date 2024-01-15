@@ -1,4 +1,6 @@
-﻿namespace MinimalDomainEvents.Outbox.Abstractions;
+﻿using MinimalDomainEvents.Outbox.Abstractions;
+
+namespace MinimalDomainEvents.Outbox;
 
 public static class IOutboxDispatcherBuilderExtensions
 {

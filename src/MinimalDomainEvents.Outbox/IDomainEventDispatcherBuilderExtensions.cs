@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MinimalDomainEvents.Dispatcher.Abstractions;
+using MinimalDomainEvents.Outbox.Abstractions;
 
-namespace MinimalDomainEvents.Outbox.Abstractions;
+namespace MinimalDomainEvents.Outbox;
 
 public static class IDomainEventDispatcherBuilderExtensions
 {

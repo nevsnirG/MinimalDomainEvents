@@ -6,8 +6,3 @@ public interface IOutboxDispatcherBuilder
     IServiceCollection Services { get; }
     OutboxSettings OutboxSettings { get; }
 }
-
-internal sealed record OutboxDispatcherBuilder(IServiceCollection Services) : IOutboxDispatcherBuilder
-{
-    public OutboxSettings OutboxSettings { get; } = new();
-}
