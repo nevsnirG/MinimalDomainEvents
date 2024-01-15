@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Outbox.MongoDb</PackageId>
-		<Version>0.1.1-alpha</Version>
+		<Version>0.1.2-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+		<PackageReference Include="MongoDB.Driver" Version="[2.19.*,3.0.0)" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Outbox.MongoDb.NServiceBus</PackageId>
-		<Version>0.1.0-alpha</Version>
+		<Version>0.1.1-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="NServiceBus.Storage.MongoDB" Version="3.0.2" />
+		<PackageReference Include="NServiceBus.Storage.MongoDB" Version="[3.0.2,4.0.0)" />
 	</ItemGroup>
 
 	<ItemGroup>

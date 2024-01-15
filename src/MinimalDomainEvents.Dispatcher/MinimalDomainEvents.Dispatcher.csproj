@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Dispatcher</PackageId>
-		<Version>0.3.0-alpha</Version>
+		<Version>0.3.1-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 
@@ -32,10 +32,6 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="MinimalDomainEvents.Dispatcher.UnitTests" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

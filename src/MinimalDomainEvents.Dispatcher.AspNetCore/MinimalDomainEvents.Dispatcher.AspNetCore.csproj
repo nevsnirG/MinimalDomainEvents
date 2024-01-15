@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Dispatcher.AspNetCore</PackageId>
-		<Version>0.1.0-alpha</Version>
+		<Version>0.1.1-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 
@@ -22,19 +22,19 @@
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
-	
+
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <None Include="..\..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <ProjectReference Include="..\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj" />
+		<ProjectReference Include="..\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj" />
 	</ItemGroup>
 </Project>
