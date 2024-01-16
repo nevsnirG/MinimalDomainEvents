@@ -16,6 +16,10 @@ internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
 
     public async Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents)
     {
+        ArgumentNullException.ThrowIfNull(domainEvents);
+        if (domainEvents.Count == 0)
+            return;
+
         if (_settings.SendBatched)
         {
             var batchRecord = CreateBatchRecord(domainEvents);
