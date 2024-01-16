@@ -2,7 +2,6 @@
 using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
-using System.Collections.Immutable;
 
 namespace MinimalDomainEvents.Outbox;
 internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
