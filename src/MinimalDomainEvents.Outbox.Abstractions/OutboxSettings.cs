@@ -2,6 +2,11 @@
 
 public sealed class OutboxSettings
 {
+    public static OutboxSettings Default => new()
+    {
+        SendBatched = true
+    };
+
     public string? DatabaseName { get; set; }
-    public bool SendBatched { get; set; } = true;
+    public bool SendBatched { get; set; }
 }

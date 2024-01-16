@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using MinimalDomainEvents.Dispatcher;
 using MinimalDomainEvents.Outbox.Abstractions;
@@ -8,7 +7,7 @@ using MongoDB.Driver.Linq;
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
 
 [Collection("MongoDb Integration")]
-public class OutboxBuilderExtensionsTests(MongoContainerFixture fixture)
+public class OutboxDispatcherBuilderExtensionsTests(MongoContainerFixture fixture)
 {
     [Fact]
     public async Task WithDatabase_After_UseMongo_Works()

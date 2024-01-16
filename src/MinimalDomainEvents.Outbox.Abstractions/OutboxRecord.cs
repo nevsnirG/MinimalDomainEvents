@@ -1,5 +1,4 @@
 ﻿namespace MinimalDomainEvents.Outbox.Abstractions;
-//TODO - ExpirateAt property
 public sealed class OutboxRecord
 {
     public DateTimeOffset EnqueuedAt { get; init; }

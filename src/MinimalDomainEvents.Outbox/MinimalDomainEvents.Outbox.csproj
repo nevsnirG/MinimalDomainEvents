@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Outbox</PackageId>
-		<Version>0.1.2-alpha</Version>
+		<Version>0.2.0-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -24,14 +24,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="..\..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
-
+	
 	<ItemGroup>
-		<PackageReference Include="protobuf-net" Version="[3.2.30,)" />
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.UnitTests" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="MessagePack" Version="2.5.140" />
 	</ItemGroup>
 
 	<ItemGroup>

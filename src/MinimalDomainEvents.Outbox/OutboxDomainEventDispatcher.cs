@@ -1,6 +1,8 @@
-﻿using MinimalDomainEvents.Contract;
+﻿using MessagePack;
+using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
+using System.Collections.Immutable;
 
 namespace MinimalDomainEvents.Outbox;
 internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
@@ -35,7 +37,7 @@ internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
     private static OutboxRecord CreateBatchRecord(IReadOnlyCollection<IDomainEvent> domainEvents)
     {
         var enqueuedAt = DateTimeOffset.UtcNow;
-        var messageData = ToBinary(domainEvents);
+        var messageData = ToBinary(domainEvents.ToList());
         return new OutboxRecord(enqueuedAt, messageData);
     }
 
@@ -51,10 +53,11 @@ internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
         return outboxRecords;
     }
 
-    private static byte[] ToBinary(object input)
+    private static byte[] ToBinary<T>(T input)
     {
-        using var memoryStream = new MemoryStream();
-        ProtoBuf.Serializer.Serialize(memoryStream, input);
-        return memoryStream.ToArray();
+        var options = MessagePack.Resolvers.ContractlessStandardResolver.Options
+            .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance);
+        
+        return MessagePackSerializer.Typeless.Serialize(input, options);
     }
 }
