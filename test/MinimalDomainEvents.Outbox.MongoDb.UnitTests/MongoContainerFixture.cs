@@ -24,7 +24,6 @@ public sealed class MongoContainerFixture : IAsyncLifetime
 
     public async Task DisposeAsync()
     {
-        //await _container.DisposeAsync();
-        await Task.Delay(1);
+        await _container.DisposeAsync();
     }
 }
