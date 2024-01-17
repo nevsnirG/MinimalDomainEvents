@@ -6,7 +6,8 @@ public sealed class MognoContainerCollectionFixture : ICollectionFixture<MongoCo
 
 public sealed class MongoContainerFixture : IAsyncLifetime
 {
-    public string ConnectionString { get; private set; } = string.Empty;
+    public string? ConnectionString => _container?.GetConnectionString();
+
     private readonly MongoDbContainer _container;
 
     public MongoContainerFixture()
@@ -19,7 +20,6 @@ public sealed class MongoContainerFixture : IAsyncLifetime
     public async Task InitializeAsync()
     {
         await _container.StartAsync();
-        ConnectionString = _container.GetConnectionString();
     }
 
     public async Task DisposeAsync()
