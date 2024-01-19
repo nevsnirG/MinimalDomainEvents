@@ -13,7 +13,7 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>MinimalDomainEvents.Dispatcher.MediatR</Title>
-		<Description>MediatR dispatching behavior for domain events.</Description>
+		<Description>MediatR dispatching behavior for domain events. Dispatches domain events as MediatR notifications.</Description>
 		<PackageProjectUrl>https://github.com/nevsnirG/MinimalDomainEvents</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/nevsnirG/MinimalDomainEvents</RepositoryUrl>
