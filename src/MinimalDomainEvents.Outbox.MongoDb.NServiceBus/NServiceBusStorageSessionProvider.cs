@@ -2,7 +2,7 @@
 using NServiceBus.Storage.MongoDB;
 
 namespace MinimalDomainEvents.Outbox.MongoDb.NServiceBus;
-internal sealed class NServiceBusStorageSessionProvider : ITransactionProvider
+internal sealed class NServiceBusStorageSessionProvider : IMongoSessionProvider
 {
     private readonly IMongoSynchronizedStorageSession _sharedSession;
 

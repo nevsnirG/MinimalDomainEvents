@@ -1,17 +1,17 @@
 ﻿using MongoDB.Driver;
 
 namespace MinimalDomainEvents.Outbox.MongoDb;
-public interface ITransactionProvider
+public interface IMongoSessionProvider
 {
     IClientSessionHandle? Session { get; }
 }
 
-public interface ITransactionProviderInitializer
+public interface IMongoSessionProviderInitializer
 {
     void Initialize(IClientSessionHandle session);
 }
 
-internal sealed class TransactionProvider : ITransactionProvider, ITransactionProviderInitializer
+internal sealed class MongoSessionProvider : IMongoSessionProvider, IMongoSessionProviderInitializer
 {
     public IClientSessionHandle? Session => _session;
 

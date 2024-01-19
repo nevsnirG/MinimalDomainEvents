@@ -27,9 +27,9 @@ public static class IOutboxDispatcherBuilderExtensions
     {
         TryRegisterOutboxRecordClassMap();
 
-        builder.Services.TryAddScoped<TransactionProvider>();
-        builder.Services.TryAddScoped<ITransactionProvider>(sp => sp.GetRequiredService<TransactionProvider>());
-        builder.Services.TryAddScoped<ITransactionProviderInitializer>(sp => sp.GetRequiredService<TransactionProvider>());
+        builder.Services.TryAddScoped<MongoSessionProvider>();
+        builder.Services.TryAddScoped<IMongoSessionProvider>(sp => sp.GetRequiredService<MongoSessionProvider>());
+        builder.Services.TryAddScoped<IMongoSessionProviderInitializer>(sp => sp.GetRequiredService<MongoSessionProvider>());
     }
 
     private static bool TryRegisterOutboxRecordClassMap()

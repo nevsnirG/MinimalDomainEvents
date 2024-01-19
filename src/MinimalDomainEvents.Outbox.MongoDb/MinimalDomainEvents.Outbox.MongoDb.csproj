@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Outbox.MongoDb</PackageId>
-		<Version>0.1.2-alpha</Version>
+		<Version>0.1.3-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>

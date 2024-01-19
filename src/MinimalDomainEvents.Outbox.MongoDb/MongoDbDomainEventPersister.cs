@@ -1,17 +1,18 @@
 ﻿using MinimalDomainEvents.Outbox.Abstractions;
 using MongoDB.Driver;
 
-//TODO - Turn transactions on/off.
 namespace MinimalDomainEvents.Outbox.MongoDb;
 internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
 {
     private const string CollectionName = "OutboxRecords";
 
+    private readonly IMongoSessionProvider _mongoSessionProvider;
     private readonly OutboxSettings _outboxSettings;
     private readonly MongoClient _mongoClient;
 
-    public MongoDbDomainEventPersister(OutboxSettings outboxSettings, MongoClient mongoClient)
+    public MongoDbDomainEventPersister(IMongoSessionProvider transactionProvider, OutboxSettings outboxSettings, MongoClient mongoClient)
     {
+        _mongoSessionProvider = transactionProvider;
         _outboxSettings = outboxSettings;
         _mongoClient = mongoClient;
     }
@@ -26,21 +27,19 @@ internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
         await PersistIndividually(outboxCollection, outboxRecords);
     }
 
-    public async Task PersistBatched(OutboxRecord outboxRecord)
+    public Task PersistBatched(OutboxRecord outboxRecord)
     {
         ArgumentNullException.ThrowIfNull(outboxRecord);
 
         var outboxCollection = GetOutboxCollection();
-        await outboxCollection.InsertOneAsync(outboxRecord);
+
+        if (_mongoSessionProvider.Session is not null)
+            return outboxCollection.InsertOneAsync(_mongoSessionProvider.Session, outboxRecord);
+        else
+            return outboxCollection.InsertOneAsync(outboxRecord);
     }
 
-    private IMongoCollection<OutboxRecord> GetOutboxCollection()
-    {
-        var database = _mongoClient.GetDatabase(_outboxSettings.DatabaseName);
-        return database.GetCollection<OutboxRecord>(CollectionName);
-    }
-
-    private static Task PersistIndividually(IMongoCollection<OutboxRecord> outboxCollection, IReadOnlyCollection<OutboxRecord> outboxRecords)
+    private Task PersistIndividually(IMongoCollection<OutboxRecord> outboxCollection, IReadOnlyCollection<OutboxRecord> outboxRecords)
     {
         var writes = new List<InsertOneModel<OutboxRecord>>(outboxRecords.Count);
         foreach (var outboxRecord in outboxRecords)
@@ -48,6 +47,16 @@ internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
             var writeModel = new InsertOneModel<OutboxRecord>(outboxRecord);
             writes.Add(writeModel);
         }
-        return outboxCollection.BulkWriteAsync(writes);
+
+        if (_mongoSessionProvider.Session is not null)
+            return outboxCollection.BulkWriteAsync(_mongoSessionProvider.Session, writes);
+        else
+            return outboxCollection.BulkWriteAsync(writes);
+    }
+
+    private IMongoCollection<OutboxRecord> GetOutboxCollection()
+    {
+        var database = _mongoClient.GetDatabase(_outboxSettings.DatabaseName);
+        return database.GetCollection<OutboxRecord>(CollectionName);
     }
 }

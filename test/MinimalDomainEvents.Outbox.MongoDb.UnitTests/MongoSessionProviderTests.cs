@@ -1,16 +1,16 @@
 ﻿using MongoDB.Driver;
 
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
-public class TransactionProviderTests
+public class MongoSessionProviderTests
 {
     [Fact]
     internal void Given_Initialized_Returns_Session()
     {
         var session = Mock.Of<IClientSessionHandle>();
-        var sut = new TransactionProvider();
+        var sut = new MongoSessionProvider();
 
         sut.Initialize(session);
 
-        sut.Session.Should().BeSameAs(session, "the transaction provider should return the session it was initialized with.");
+        sut.Session.Should().BeSameAs(session, "the session provider should return the session it was initialized with.");
     }
 }
