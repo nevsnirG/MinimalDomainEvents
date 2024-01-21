@@ -29,13 +29,13 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.UnitTests" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <PackageReference Include="MessagePack" Version="2.5.140" />
+		<PackageReference Include="MessagePack" Version="2.5.140" />
 	</ItemGroup>
 
 	<ItemGroup>

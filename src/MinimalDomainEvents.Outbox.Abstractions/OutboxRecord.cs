@@ -2,7 +2,8 @@
 public sealed class OutboxRecord
 {
     public DateTimeOffset EnqueuedAt { get; init; }
-    public byte[] MessageData { get; init; }
+    public DateTimeOffset? DispatchedAt { get; set; }
+    public byte[] MessageData { get; set; }
     public DateTimeOffset ExpiresAt => EnqueuedAt.AddDays(7);
 
     public OutboxRecord(DateTimeOffset enqueuedAt, byte[] messageData)

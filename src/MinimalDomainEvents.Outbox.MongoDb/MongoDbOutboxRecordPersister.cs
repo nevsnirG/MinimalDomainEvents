@@ -2,16 +2,16 @@
 using MongoDB.Driver;
 
 namespace MinimalDomainEvents.Outbox.MongoDb;
-internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
+internal sealed class MongoDbOutboxRecordPersister : IPersistOutboxRecords
 {
-    private const string CollectionName = "OutboxRecords";
-
+    private readonly IOutboxRecordCollectionProvider _outboxRecordCollectionProvider;
     private readonly IMongoSessionProvider _mongoSessionProvider;
     private readonly OutboxSettings _outboxSettings;
     private readonly MongoClient _mongoClient;
 
-    public MongoDbDomainEventPersister(IMongoSessionProvider transactionProvider, OutboxSettings outboxSettings, MongoClient mongoClient)
+    public MongoDbOutboxRecordPersister(IOutboxRecordCollectionProvider outboxRecordCollectionProvider, IMongoSessionProvider transactionProvider, OutboxSettings outboxSettings, MongoClient mongoClient)
     {
+        _outboxRecordCollectionProvider = outboxRecordCollectionProvider;
         _mongoSessionProvider = transactionProvider;
         _outboxSettings = outboxSettings;
         _mongoClient = mongoClient;
@@ -23,7 +23,7 @@ internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
         if (outboxRecords.Count == 0)
             return;
 
-        var outboxCollection = GetOutboxCollection();
+        var outboxCollection = GetCollection();
         await PersistIndividually(outboxCollection, outboxRecords);
     }
 
@@ -31,7 +31,7 @@ internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
     {
         ArgumentNullException.ThrowIfNull(outboxRecord);
 
-        var outboxCollection = GetOutboxCollection();
+        var outboxCollection = GetCollection();
 
         if (_mongoSessionProvider.Session is not null)
             return outboxCollection.InsertOneAsync(_mongoSessionProvider.Session, outboxRecord);
@@ -54,9 +54,14 @@ internal sealed class MongoDbDomainEventPersister : IPersistOutboxRecords
             return outboxCollection.BulkWriteAsync(writes);
     }
 
-    private IMongoCollection<OutboxRecord> GetOutboxCollection()
+    private IMongoCollection<OutboxRecord> GetCollection()
     {
-        var database = _mongoClient.GetDatabase(_outboxSettings.DatabaseName);
-        return database.GetCollection<OutboxRecord>(CollectionName);
+        var collectionSettings = new MongoCollectionSettings
+        {
+            ReadConcern = ReadConcern.Majority,
+            ReadPreference = ReadPreference.Primary,
+            WriteConcern = WriteConcern.WMajority
+        };
+        return _outboxRecordCollectionProvider.Provide(collectionSettings);
     }
 }
