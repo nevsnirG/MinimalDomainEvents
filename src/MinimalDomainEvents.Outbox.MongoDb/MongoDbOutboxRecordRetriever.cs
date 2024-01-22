@@ -18,7 +18,7 @@ internal sealed class MongoDbOutboxRecordRetriever : IRetrieveOutboxRecords
     public async Task<IReadOnlyCollection<OutboxRecord>> GetAndMarkAsDispatched(CancellationToken cancellationToken)
     {
         var session = GetCurrentMongoClientSession();
-        var collection = _outboxRecordCollectionProvider.Provide();
+        var collection = GetCollection();
 
         var outboxRecords = await FindOldestNotDispatchedOutboxRecords(session, collection, cancellationToken);
         await UpdateDispatchedAt(session, collection, outboxRecords, cancellationToken);
@@ -26,9 +26,20 @@ internal sealed class MongoDbOutboxRecordRetriever : IRetrieveOutboxRecords
         return outboxRecords;
     }
 
+    private IMongoCollection<OutboxRecord> GetCollection()
+    {
+        var collectionSettings = new MongoCollectionSettings
+        {
+            ReadConcern = ReadConcern.Majority,
+            ReadPreference = ReadPreference.Primary,
+            WriteConcern = WriteConcern.WMajority
+        };
+        return _outboxRecordCollectionProvider.Provide(collectionSettings);
+    }
+
     private IClientSessionHandle GetCurrentMongoClientSession()
     {
-        if (!_transactionProvider.TryGetCurrentTransaction(out var transaction) || transaction is not MongoOutboxTransaction mongoOutboxTransaction)
+        if (!_transactionProvider.TryGetCurrentTransaction(out var transaction) || transaction is not MongoDbOutboxTransaction mongoOutboxTransaction)
             throw new InvalidOperationException("A mongo transaction must have been started.");
         return mongoOutboxTransaction.ClientSessionHandle;
     }

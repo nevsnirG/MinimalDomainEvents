@@ -3,13 +3,13 @@ using MongoDB.Driver;
 
 namespace MinimalDomainEvents.Outbox.MongoDb;
 
-internal sealed class MongoTransactionProvider : ITransactionProvider
+internal sealed class MongoDbTransactionProvider : ITransactionProvider
 {
     private readonly MongoClient _mongoClient;
 
     private IOutboxTransaction? _currentTransaction;
 
-    public MongoTransactionProvider(MongoClient mongoClient)
+    public MongoDbTransactionProvider(MongoClient mongoClient)
     {
         _mongoClient = mongoClient;
     }
@@ -20,9 +20,9 @@ internal sealed class MongoTransactionProvider : ITransactionProvider
             throw new InvalidOperationException("A transaction has already been started.");
 
         var session = await _mongoClient.StartSessionAsync(null, cancellationToken);
-        var transaction = new MongoOutboxTransaction(session);
-        await transaction.StartTransaction(cancellationToken);
-        return transaction;
+        _currentTransaction = new MongoDbOutboxTransaction(session);
+        await _currentTransaction.StartTransaction(cancellationToken);
+        return _currentTransaction;
     }
 
     public bool TryGetCurrentTransaction(out IOutboxTransaction? outboxTransaction)

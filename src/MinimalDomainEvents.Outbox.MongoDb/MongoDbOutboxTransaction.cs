@@ -3,11 +3,11 @@ using MongoDB.Driver;
 
 namespace MinimalDomainEvents.Outbox.MongoDb;
 
-internal sealed class MongoOutboxTransaction : IOutboxTransaction
+internal sealed class MongoDbOutboxTransaction : IOutboxTransaction
 {
     public IClientSessionHandle ClientSessionHandle { get; }
 
-    public MongoOutboxTransaction(IClientSessionHandle clientSessionHandle)
+    public MongoDbOutboxTransaction(IClientSessionHandle clientSessionHandle)
     {
         ClientSessionHandle = clientSessionHandle;
     }
