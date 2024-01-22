@@ -7,19 +7,49 @@ namespace MinimalDomainEvents.Outbox.MongoDb;
 internal sealed class MongoDbOutboxRecordRetriever : IRetrieveOutboxRecords
 {
     private readonly IOutboxRecordCollectionProvider _outboxRecordCollectionProvider;
-    private readonly MongoClient _mongoClient;
+    private readonly ITransactionProvider _transactionProvider;
 
-    public MongoDbOutboxRecordRetriever(IOutboxRecordCollectionProvider outboxRecordCollectionProvider, MongoClient mongoClient)
+    public MongoDbOutboxRecordRetriever(IOutboxRecordCollectionProvider outboxRecordCollectionProvider, ITransactionProvider transactionProvider)
     {
         _outboxRecordCollectionProvider = outboxRecordCollectionProvider;
-        _mongoClient = mongoClient;
+        _transactionProvider = transactionProvider;
     }
 
-    public Task<IReadOnlyCollection<OutboxRecord>> GetAndMarkAsDispatched()
+    public async Task<IReadOnlyCollection<OutboxRecord>> GetAndMarkAsDispatched(CancellationToken cancellationToken)
     {
+        var session = GetCurrentMongoClientSession();
         var collection = _outboxRecordCollectionProvider.Provide();
-        collection.AsQueryable()
-            .Where(or => or.DispatchedAt == null)
-            .OrderBy(or => or.EnqueuedAt)
+
+        var outboxRecords = await FindOldestNotDispatchedOutboxRecords(session, collection, cancellationToken);
+        await UpdateDispatchedAt(session, collection, outboxRecords, cancellationToken);
+
+        return outboxRecords;
+    }
+
+    private IClientSessionHandle GetCurrentMongoClientSession()
+    {
+        if (!_transactionProvider.TryGetCurrentTransaction(out var transaction) || transaction is not MongoOutboxTransaction mongoOutboxTransaction)
+            throw new InvalidOperationException("A mongo transaction must have been started.");
+        return mongoOutboxTransaction.ClientSessionHandle;
+    }
+
+    private static async Task<List<OutboxRecord>> FindOldestNotDispatchedOutboxRecords(IClientSessionHandle session, IMongoCollection<OutboxRecord> collection, CancellationToken cancellationToken)
+    {
+        return await collection.AsQueryable(session)
+                    .Where(or => or.DispatchedAt == null)
+                    .OrderBy(or => or.EnqueuedAt)
+                    .ToListAsync(cancellationToken);
+    }
+
+    private static async Task UpdateDispatchedAt(IClientSessionHandle session, IMongoCollection<OutboxRecord> collection, List<OutboxRecord> outboxRecords, CancellationToken cancellationToken)
+    {
+        var outboxRecordIds = outboxRecords.Select(or => or.Id);
+        var filter = Builders<OutboxRecord>.Filter.In(or => or.Id, outboxRecordIds);
+        var update = Builders<OutboxRecord>.Update.Set(or => or.DispatchedAt, DateTimeOffset.UtcNow);
+        var updateOptions = new UpdateOptions
+        {
+            IsUpsert = false
+        };
+        await collection.UpdateManyAsync(session, filter, update, updateOptions, cancellationToken);
     }
 }

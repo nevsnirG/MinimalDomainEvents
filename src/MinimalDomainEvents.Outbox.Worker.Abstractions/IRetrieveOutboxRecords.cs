@@ -3,5 +3,5 @@
 namespace MinimalDomainEvents.Outbox.Worker.Abstractions;
 public interface IRetrieveOutboxRecords
 {
-    Task<IReadOnlyCollection<OutboxRecord>> GetAndMarkAsDispatched();
+    Task<IReadOnlyCollection<OutboxRecord>> GetAndMarkAsDispatched(CancellationToken cancellationToken = default);
 }

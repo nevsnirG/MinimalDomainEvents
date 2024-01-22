@@ -30,5 +30,6 @@ public static class IOutboxDispatcherBuilderExtensions
         builder.Services.TryAddScoped<IMongoSessionProviderInitializer>(sp => sp.GetRequiredService<MongoSessionProvider>());
         builder.Services.TryAddScoped<IRetrieveOutboxRecords, MongoDbOutboxRecordRetriever>();
         builder.Services.TryAddScoped<IOutboxRecordCollectionProvider, OutboxRecordCollectionProvider>();
+        builder.Services.TryAddScoped<ITransactionProvider, MongoTransactionProvider>();
     }
 }

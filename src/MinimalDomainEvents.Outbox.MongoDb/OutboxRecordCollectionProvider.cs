@@ -8,12 +8,7 @@ internal interface IOutboxRecordCollectionProvider
     IMongoCollection<OutboxRecord> Provide(MongoCollectionSettings? collectionSettings = null);
 }
 
-internal interface IOutboxRecordCollectionProviderInitializer
-{
-    Task Initialize(CancellationToken cancellationToken);
-}
-
-internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionProvider, IOutboxRecordCollectionProviderInitializer
+internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionProvider, IOutboxRecordCollectionInitializer
 {
     private const string CollectionName = "OutboxRecords";
 
@@ -25,7 +20,6 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
         _outboxSettings = outboxSettings;
         _mongoClient = mongoClient;
     }
-
 
     //TODO - Indexes op EnqueuedAt en DispatchedAt
     //TODO - Expiration indexes
@@ -41,8 +35,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
         };
         var collection = Provide(collectionSettings);
 
-
-        //TODO - Create indexes if not exist.
+        //TODO - Create indexes (recreate if exists with same name (because of versioning))
         return Task.CompletedTask;
     }
 
@@ -50,7 +43,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
     {
         return BsonClassMap.TryRegisterClassMap<OutboxRecord>(cm =>
         {
-            cm.AutoMap();
+            cm.MapIdProperty(or => or.Id);
             cm.SetIgnoreExtraElements(true);
         });
     }
