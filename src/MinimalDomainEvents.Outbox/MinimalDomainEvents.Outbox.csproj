@@ -39,7 +39,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MinimalDomainEvents.Dispatcher.Abstractions\MinimalDomainEvents.Dispatcher.Abstractions.csproj" />
 		<ProjectReference Include="..\MinimalDomainEvents.Outbox.Abstractions\MinimalDomainEvents.Outbox.Abstractions.csproj" />
 	</ItemGroup>
 
