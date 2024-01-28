@@ -14,16 +14,20 @@ public sealed class MongoContainerFixture : IAsyncLifetime
     {
         _container = new MongoDbBuilder()
             .WithImage("mongo:6.0")
+            .WithCleanUp(false)
+            .WithAutoRemove(false)
+            .WithEntrypoint("docker-entrypoint.sh mongod --replSet rs0")
             .Build();
     }
 
     public async Task InitializeAsync()
     {
         await _container.StartAsync();
+        await _container.ExecScriptAsync("rs.initiate()");
     }
 
     public async Task DisposeAsync()
     {
-        await _container.DisposeAsync();
+        //await _container.DisposeAsync();
     }
 }

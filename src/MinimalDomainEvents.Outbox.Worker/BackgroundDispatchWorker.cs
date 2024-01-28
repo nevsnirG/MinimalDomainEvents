@@ -7,15 +7,15 @@ internal sealed class BackgroundDispatchWorker : BackgroundService
 {
     private readonly IOutboxRecordCollectionInitializer _outboxRecordCollectionInitializer;
     private readonly ITransactionProvider _transactionFactory;
-    private readonly IRetrieveOutboxRecords _retrieveOutboxRecords;
+    private readonly IDomainEventRetriever _domainEventRetriever;
     private readonly ICleanupOutboxRecords _cleanupOutboxRecords;
 
     public BackgroundDispatchWorker(IOutboxRecordCollectionInitializer outboxRecordCollectionInitializer,
                                     ITransactionProvider transactionFactory,
-                                    IRetrieveOutboxRecords retrieveOutboxRecords,
+                                    IDomainEventRetriever domainEventRetriever,
                                     ICleanupOutboxRecords cleanupOutboxRecords)
     {
-        _retrieveOutboxRecords = retrieveOutboxRecords;
+        _domainEventRetriever = domainEventRetriever;
         _outboxRecordCollectionInitializer = outboxRecordCollectionInitializer;
         _transactionFactory = transactionFactory;
         _cleanupOutboxRecords = cleanupOutboxRecords;
@@ -28,7 +28,7 @@ internal sealed class BackgroundDispatchWorker : BackgroundService
         while (true)
         {
             using var transaction = await _transactionFactory.NewTransaction(stoppingToken);
-            var domainEvents = await _retrieveOutboxRecords.GetAndMarkAsDispatched(stoppingToken);
+            var domainEvents = await _domainEventRetriever.GetAndMarkAsDispatched(stoppingToken);
             //TODO - Dispatch domain events
             await _cleanupOutboxRecords.CleanupExpiredOutboxRecords(stoppingToken);
             await transaction.Commit(stoppingToken);

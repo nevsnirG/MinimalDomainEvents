@@ -23,7 +23,9 @@ public static class IDomainEventDispatcherBuilderExtensions
 
         if (configure is not null)
         {
-            configure(new OutboxDispatcherBuilder(builder.Services));
+            var outboxDispatcherBuilder = new OutboxDispatcherBuilder(builder.Services);
+            builder.Services.AddSingleton(outboxDispatcherBuilder.OutboxSettings);
+            configure(outboxDispatcherBuilder);
         }
 
         return builder;

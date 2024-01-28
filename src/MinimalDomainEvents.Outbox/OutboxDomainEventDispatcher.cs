@@ -36,7 +36,7 @@ internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
     private static OutboxRecord CreateBatchRecord(IReadOnlyCollection<IDomainEvent> domainEvents)
     {
         var enqueuedAt = DateTimeOffset.UtcNow;
-        var messageData = ToBinary(domainEvents.ToList());
+        var messageData = ToBinary(domainEvents.ToArray());
         return new OutboxRecord(enqueuedAt, messageData);
     }
 
@@ -46,13 +46,13 @@ internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
         var outboxRecords = new List<OutboxRecord>(domainEvents.Count);
         foreach (var domainEvent in domainEvents)
         {
-            var outboxRecord = new OutboxRecord(enqueuedAt, ToBinary(domainEvent));
+            var outboxRecord = new OutboxRecord(enqueuedAt, ToBinary(new[] { domainEvent }));
             outboxRecords.Add(outboxRecord);
         }
         return outboxRecords;
     }
 
-    private static byte[] ToBinary<T>(T input)
+    private static byte[] ToBinary<T>(T[] input)
     {
         var options = MessagePack.Resolvers.ContractlessStandardResolver.Options
             .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance);

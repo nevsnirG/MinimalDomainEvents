@@ -11,7 +11,7 @@ public static class IOutboxDispatcherBuilderExtensions
     {
         RegisterDefaultServices(builder);
 
-        builder.Services.AddScoped<IPersistOutboxRecords>(sp => ActivatorUtilities.CreateInstance<MongoDbOutboxRecordPersister>(sp, builder.OutboxSettings, mongoClient));
+        builder.Services.TryAddSingleton(mongoClient);
         return builder;
     }
 
@@ -19,12 +19,13 @@ public static class IOutboxDispatcherBuilderExtensions
     {
         RegisterDefaultServices(builder);
 
-        builder.Services.AddScoped<IPersistOutboxRecords>(sp => ActivatorUtilities.CreateInstance<MongoDbOutboxRecordPersister>(sp, builder.OutboxSettings, mongoClientFactory(sp)));
+        builder.Services.TryAddSingleton(sp => mongoClientFactory(sp));
         return builder;
     }
 
     private static void RegisterDefaultServices(IOutboxDispatcherBuilder builder)
     {
+        builder.Services.TryAddScoped<IPersistOutboxRecords, MongoDbOutboxRecordPersister>();
         builder.Services.TryAddScoped<MongoSessionProvider>();
         builder.Services.TryAddScoped<IMongoSessionProvider>(sp => sp.GetRequiredService<MongoSessionProvider>());
         builder.Services.TryAddScoped<IMongoSessionProviderInitializer>(sp => sp.GetRequiredService<MongoSessionProvider>());
