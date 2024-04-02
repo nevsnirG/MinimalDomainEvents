@@ -14,7 +14,7 @@ internal sealed class MongoDbOutboxTransaction : IOutboxTransaction
 
     public Task StartTransaction(CancellationToken cancellationToken = default)
     {
-         ClientSessionHandle.StartTransaction();
+        ClientSessionHandle.StartTransaction();
         return Task.CompletedTask;
     }
 

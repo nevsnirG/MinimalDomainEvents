@@ -31,7 +31,7 @@ internal sealed class ScopedDomainEventDispatcher : IScopedDomainEventDispatcher
             return;
 
         foreach (var dispatcher in _dispatchers)
-            await dispatcher.Dispatch(domainEvents ?? new List<IDomainEvent>(0).AsReadOnly());
+            await dispatcher.Dispatch(domainEvents);
     }
 
     public void Dispose()

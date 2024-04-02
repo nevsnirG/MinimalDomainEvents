@@ -9,6 +9,7 @@ public sealed class OutboxRecord
 
     public OutboxRecord(DateTimeOffset enqueuedAt, byte[] messageData)
     {
+        Id = Guid.NewGuid();
         EnqueuedAt = enqueuedAt;
         MessageData = messageData;
     }

@@ -33,6 +33,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
             ReadPreference = ReadPreference.Primary,
             WriteConcern = WriteConcern.WMajority
         };
+
         var collection = Provide(collectionSettings);
 
         //TODO - Create indexes (recreate if exists with same name (because of versioning))

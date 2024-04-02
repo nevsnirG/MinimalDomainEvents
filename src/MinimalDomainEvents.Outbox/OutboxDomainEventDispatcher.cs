@@ -1,24 +1,36 @@
 ﻿using MessagePack;
 using MinimalDomainEvents.Contract;
+using MinimalDomainEvents.Core;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
 
 namespace MinimalDomainEvents.Outbox;
-internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
+internal sealed class OutboxDomainEventDispatcher : IScopedDomainEventDispatcher
 {
+    public IDomainEventScope? Scope => _scope;
+
+    private IDomainEventScope? _scope;
+
     private readonly OutboxSettings _settings;
     private readonly IPersistOutboxRecords _domainEventPersister;
 
     public OutboxDomainEventDispatcher(OutboxSettings settings, IPersistOutboxRecords domainEventPersister)
     {
+        _scope = DomainEventTracker.CreateScope();
         _domainEventPersister = domainEventPersister;
         _settings = settings;
     }
 
-    public async Task Dispatch(IReadOnlyCollection<IDomainEvent> domainEvents)
+    public void RaiseDomainEvent(IDomainEvent domainEvent)
     {
-        ArgumentNullException.ThrowIfNull(domainEvents);
-        if (domainEvents.Count == 0)
+        _scope!.RaiseDomainEvent(domainEvent);
+    }
+
+    public async Task DispatchAndClear()
+    {
+        var domainEvents = _scope!.GetAndClearEvents();
+
+        if (domainEvents is null || domainEvents.Count == 0)
             return;
 
         if (_settings.SendBatched)
@@ -55,8 +67,21 @@ internal sealed class OutboxDomainEventDispatcher : IDispatchDomainEvents
     private static byte[] ToBinary<T>(T[] input)
     {
         var options = MessagePack.Resolvers.ContractlessStandardResolver.Options
-            .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance);
-        
+            .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance)
+            .WithSecurity(MessagePackSecurity.UntrustedData)
+            ;
+
         return MessagePackSerializer.Typeless.Serialize(input, options);
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+
+        if (_scope is not null)
+        {
+            _scope.Dispose();
+            _scope = null;
+        }
     }
 }
