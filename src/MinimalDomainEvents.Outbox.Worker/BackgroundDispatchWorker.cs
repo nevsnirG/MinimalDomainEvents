@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MinimalDomainEvents.Outbox.Worker.Abstractions;
