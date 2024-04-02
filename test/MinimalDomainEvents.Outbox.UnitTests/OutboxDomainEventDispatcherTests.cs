@@ -63,8 +63,8 @@ public class OutboxDomainEventDispatcherTests
                 for (var i = 0; i < records.Count; i++)
                 {
                     using var memoryStream = new MemoryStream(records.ElementAt(i).MessageData);
-                    var domainEvent = MessagePackSerializer.Typeless.Deserialize(memoryStream, SerializerOptions) as TestEvent;
-                    domainEvent.Should().NotBeNull();
+                    var deserializedEvents = MessagePackSerializer.Typeless.Deserialize(memoryStream, SerializerOptions) as IDomainEvent[];
+                    var domainEvent = deserializedEvents.Should().NotBeNull().And.ContainSingle().Which.Should().BeOfType<TestEvent>().Which;
                     domainEvent!.PropA.Should().Be(domainEvents.ElementAt(i).PropA);
                 }
                 callbackSucceeded = true;

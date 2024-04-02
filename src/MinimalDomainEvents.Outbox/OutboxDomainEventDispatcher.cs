@@ -64,7 +64,7 @@ internal sealed class OutboxDomainEventDispatcher : IScopedDomainEventDispatcher
         return outboxRecords;
     }
 
-    private static byte[] ToBinary<T>(T[] input)
+    private static byte[] ToBinary(object input)
     {
         var options = MessagePack.Resolvers.ContractlessStandardResolver.Options
             .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance)
