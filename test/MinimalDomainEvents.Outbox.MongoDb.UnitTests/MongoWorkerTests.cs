@@ -36,6 +36,7 @@ public class MongoWorkerTests(MongoContainerFixture fixture) : IAsyncLifetime
                 outboxBuilder.AddMongo(mongoClient);
                 outboxBuilder.WithDatabase(DatabaseName);
             });
+            dispatcherBuilder.Services.AddSingleton(Mock.Of<IDispatchDomainEvents>());
         });
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var dispatcher = serviceProvider.GetRequiredService<IDispatchDomainEvents>();
