@@ -25,7 +25,7 @@ public class MongoWorkerTests(MongoContainerFixture fixture) : IAsyncLifetime
     }
 
     [Fact]
-    internal async Task Test()
+    internal async Task Using_Transations_Persists_OutboxRecords_Within_Same_Transaction()
     {
         var mongoClient = CreateClient();
         IServiceCollection serviceCollection = new ServiceCollection();
