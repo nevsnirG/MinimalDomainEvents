@@ -4,14 +4,14 @@ using MinimalDomainEvents.Dispatcher.Abstractions;
 namespace MinimalDomainEvents.Dispatcher;
 public static class DependencyInjectionConfiguration
 {
-    public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services)
+    public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
-        return AddDomainEventDispatcher(services, null);
+        return AddDomainEventDispatcher(services, null, serviceLifetime);
     }
 
-    public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services, Action<IDomainEventDispatcherBuilder>? configure)
+    public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services, Action<IDomainEventDispatcherBuilder>? configure, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
-        services.AddScoped<IScopedDomainEventDispatcher, ScopedDomainEventDispatcher>();
+        services.Add(new ServiceDescriptor(typeof(IScopedDomainEventDispatcher), typeof(ScopedDomainEventDispatcher), serviceLifetime));
 
         if (configure is not null)
         {
