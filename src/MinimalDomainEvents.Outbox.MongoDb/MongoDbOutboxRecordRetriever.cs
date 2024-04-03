@@ -1,5 +1,4 @@
-﻿using MinimalDomainEvents.Contract;
-using MinimalDomainEvents.Outbox.Abstractions;
+﻿using MinimalDomainEvents.Outbox.Abstractions;
 using MinimalDomainEvents.Outbox.Worker.Abstractions;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;

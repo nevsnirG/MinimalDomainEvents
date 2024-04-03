@@ -11,8 +11,11 @@ internal interface IDomainEventRetriever
 
 internal sealed class DomainEventRetriever : IDomainEventRetriever
 {
-    private readonly IRetrieveOutboxRecords _outboxRecordRetriever;
+    private static readonly MessagePackSerializerOptions _options =
+        MessagePack.Resolvers.ContractlessStandardResolver.Options
+            .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance);
 
+    private readonly IRetrieveOutboxRecords _outboxRecordRetriever;
     public DomainEventRetriever(IRetrieveOutboxRecords outboxRecordRetriever)
     {
         _outboxRecordRetriever = outboxRecordRetriever;
@@ -21,19 +24,17 @@ internal sealed class DomainEventRetriever : IDomainEventRetriever
     public async Task<IReadOnlyCollection<IDomainEvent>> GetAndMarkAsDispatched(CancellationToken cancellationToken = default)
     {
         var outboxRecords = await _outboxRecordRetriever.GetAndMarkAsDispatched(cancellationToken);
-        var options = MessagePack.Resolvers.ContractlessStandardResolver.Options
-           .WithResolver(MessagePack.Resolvers.TypelessObjectResolver.Instance);
-
         var domainEvents = new List<IDomainEvent>(outboxRecords.Count);
+
         foreach (var outboxRecord in outboxRecords)
         {
             using var memoryStream = new MemoryStream(outboxRecord.MessageData);
-            var output = await MessagePackSerializer.Typeless.DeserializeAsync(memoryStream, options, cancellationToken);
+            var output = await MessagePackSerializer.Typeless.DeserializeAsync(memoryStream, _options, cancellationToken);
             var deserializedDomainEvents = output as IDomainEvent[];
 
             if (deserializedDomainEvents is not null)
                 domainEvents.AddRange(deserializedDomainEvents);
-            //TODO - Else?
+            //TODO - Else just delete immediately?
         }
         return domainEvents;
     }

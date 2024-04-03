@@ -7,12 +7,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MessagePack" Version="2.5.140" />
-	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+		<PackageReference Include="MessagePack" Version="2.5.140" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\MinimalDomainEvents.Outbox.Worker.Abstractions\MinimalDomainEvents.Outbox.Worker.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.Worker.UnitTests" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 	</ItemGroup>
 
 </Project>
