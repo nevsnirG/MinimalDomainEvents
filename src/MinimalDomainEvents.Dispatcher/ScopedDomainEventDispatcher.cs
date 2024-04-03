@@ -3,7 +3,9 @@ using MinimalDomainEvents.Core;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher;
-
+/// <summary>
+/// Records raised domain events in it's scope and dispatches them using the provided <see cref="IDispatchDomainEvents">IDispatchDomainEvents</see> implementations.
+/// </summary>
 internal sealed class ScopedDomainEventDispatcher : IScopedDomainEventDispatcher
 {
     public IDomainEventScope? Scope => _scope;
