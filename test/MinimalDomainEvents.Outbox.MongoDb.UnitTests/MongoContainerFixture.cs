@@ -1,4 +1,5 @@
-﻿using Testcontainers.MongoDb;
+﻿using DotNet.Testcontainers.Builders;
+using Testcontainers.MongoDb;
 
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
 [CollectionDefinition("MongoDb Integration")]
@@ -13,10 +14,11 @@ public sealed class MongoContainerFixture : IAsyncLifetime
     public MongoContainerFixture()
     {
         _container = new MongoDbBuilder()
-            .WithImage("mongo:7.0.8-rc0-jammy")
-            .WithCleanUp(false)
-            .WithAutoRemove(false)
-            .WithEntrypoint("docker-entrypoint.sh mongod --replSet rs0")
+            .WithImage("mongo:latest")
+            .WithUsername("")
+            .WithPassword("")
+            .WithCommand("--replSet", "rs0")
+            .WithWaitStrategy(Wait.ForUnixContainer())
             .Build();
     }
 

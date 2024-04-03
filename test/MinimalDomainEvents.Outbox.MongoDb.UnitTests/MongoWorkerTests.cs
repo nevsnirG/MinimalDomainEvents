@@ -1,6 +1,7 @@
 ﻿using MessagePack;
 using Microsoft.Extensions.DependencyInjection;
 using MinimalDomainEvents.Contract;
+using MinimalDomainEvents.Core;
 using MinimalDomainEvents.Dispatcher;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
@@ -25,7 +26,7 @@ public class MongoWorkerTests(MongoContainerFixture fixture) : IAsyncLifetime
     }
 
     [Fact]
-    internal async Task Using_Transations_Persists_OutboxRecords_Within_Same_Transaction()
+    internal async Task Using_Transactions_Persists_OutboxRecords_Within_Same_Transaction()
     {
         var mongoClient = CreateClient();
         IServiceCollection serviceCollection = new ServiceCollection();
@@ -39,12 +40,10 @@ public class MongoWorkerTests(MongoContainerFixture fixture) : IAsyncLifetime
             dispatcherBuilder.Services.AddSingleton(Mock.Of<IDispatchDomainEvents>());
         });
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        var dispatcher = serviceProvider.GetRequiredService<IDispatchDomainEvents>();
+        var dispatcher = serviceProvider.GetRequiredService<IScopedDomainEventDispatcher>();
 
-        await dispatcher.Dispatch(new[]
-        {
-            new TestEvent("SomeValue")
-        });
+        dispatcher.RaiseDomainEvent(new TestEvent("SomeValue"));
+        await dispatcher.DispatchAndClear();
 
         var transactionProvider = serviceProvider.GetRequiredService<ITransactionProvider>();
         var retriever = serviceProvider.GetRequiredService<IRetrieveOutboxRecords>();

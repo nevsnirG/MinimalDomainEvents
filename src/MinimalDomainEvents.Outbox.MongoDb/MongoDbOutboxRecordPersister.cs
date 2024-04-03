@@ -7,10 +7,10 @@ internal sealed class MongoDbOutboxRecordPersister : IPersistOutboxRecords
     private readonly IOutboxRecordCollectionProvider _outboxRecordCollectionProvider;
     private readonly IMongoSessionProvider _mongoSessionProvider;
 
-    public MongoDbOutboxRecordPersister(IOutboxRecordCollectionProvider outboxRecordCollectionProvider, IMongoSessionProvider transactionProvider)
+    public MongoDbOutboxRecordPersister(IOutboxRecordCollectionProvider outboxRecordCollectionProvider, IMongoSessionProvider mongoSessionProvider)
     {
         _outboxRecordCollectionProvider = outboxRecordCollectionProvider;
-        _mongoSessionProvider = transactionProvider;
+        _mongoSessionProvider = mongoSessionProvider;
     }
 
     public async Task PersistIndividually(IReadOnlyCollection<OutboxRecord> outboxRecords, CancellationToken cancellationToken)
