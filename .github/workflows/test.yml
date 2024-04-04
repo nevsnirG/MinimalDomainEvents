@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows
     timeout-minutes: 5
     steps:
     - name: Checkout
@@ -17,6 +17,6 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v1
     - name: Build
-      run: dotnet build MinimalDomainEvents.sln -c Release
+      run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release --no-build
