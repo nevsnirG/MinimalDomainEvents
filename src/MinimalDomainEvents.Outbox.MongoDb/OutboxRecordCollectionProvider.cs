@@ -17,7 +17,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
     private readonly MongoClient _mongoClient;
 
     private const string EnqueuedAtIndexName = "EnqueuedAt_asc";
-    private const string DispatchedAtIndexName = "ExpiresAt_asc";
+    private const string DispatchedAtIndexName = "OutboxCleanup";
 
     public OutboxRecordCollectionProvider(OutboxSettings outboxSettings, MongoClient mongoClient)
     {
@@ -77,7 +77,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
 
     private static async Task CreateDispatchedAtIndex(IMongoCollection<OutboxRecord> collection, CancellationToken cancellationToken)
     {
-        var indexKeysDefinition = Builders<OutboxRecord>.IndexKeys.Ascending(or => or.ExpiresAt);
+        var indexKeysDefinition = Builders<OutboxRecord>.IndexKeys.Ascending(or => or.DispatchedAt);
         var createIndexModel = new CreateIndexModel<OutboxRecord>(indexKeysDefinition, new()
         {
             ExpireAfter = TimeSpan.FromDays(7),
@@ -92,6 +92,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
         return BsonClassMap.TryRegisterClassMap<OutboxRecord>(cm =>
         {
             cm.MapIdProperty(or => or.Id);
+            cm.AutoMap();
             cm.UnmapProperty(or => or.ExpiresAt);
             cm.SetIgnoreExtraElements(true);
         });

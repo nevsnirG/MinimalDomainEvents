@@ -21,8 +21,13 @@ internal sealed class MongoDbTransactionProvider : ITransactionProvider
 
         var session = await _mongoClient.StartSessionAsync(null, cancellationToken);
         _currentTransaction = new MongoDbOutboxTransaction(session);
-        await _currentTransaction.StartTransaction(cancellationToken);
+        await _currentTransaction.StartTransaction(ClearTransaction, cancellationToken);
         return _currentTransaction;
+    }
+
+    private void ClearTransaction()
+    {
+        _currentTransaction = null;
     }
 
     public bool TryGetCurrentTransaction(out IOutboxTransaction? outboxTransaction)

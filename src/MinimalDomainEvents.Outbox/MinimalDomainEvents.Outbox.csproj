@@ -32,6 +32,7 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.UnitTests" />
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.Worker.UnitTests" />
 	</ItemGroup>
 
 	<ItemGroup>

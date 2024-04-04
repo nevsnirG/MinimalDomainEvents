@@ -14,7 +14,6 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
 		<PackageReference Include="Moq" Version="4.20.70" />
-		<PackageReference Include="Testcontainers.MongoDb" Version="3.7.0" />
 		<PackageReference Include="xunit" Version="2.6.5" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,6 +29,7 @@
 		<ProjectReference Include="..\..\src\MinimalDomainEvents.Dispatcher\MinimalDomainEvents.Dispatcher.csproj" />
 		<ProjectReference Include="..\..\src\MinimalDomainEvents.Outbox.MongoDb\MinimalDomainEvents.Outbox.MongoDb.csproj" />
 		<ProjectReference Include="..\..\src\MinimalDomainEvents.Outbox\MinimalDomainEvents.Outbox.csproj" />
+		<ProjectReference Include="..\MongoTestContainer\MongoTestContainer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

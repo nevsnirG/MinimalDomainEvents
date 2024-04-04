@@ -1,10 +1,8 @@
 ﻿using DotNet.Testcontainers.Builders;
 using Testcontainers.MongoDb;
+using Xunit;
 
-namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
-[CollectionDefinition("MongoDb Integration")]
-public sealed class MognoContainerCollectionFixture : ICollectionFixture<MongoContainerFixture> { }
-
+namespace MongoTestContainer;
 public sealed class MongoContainerFixture : IAsyncLifetime
 {
     public string? ConnectionString => _container?.GetConnectionString();

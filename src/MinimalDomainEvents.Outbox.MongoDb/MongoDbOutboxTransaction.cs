@@ -7,20 +7,24 @@ internal sealed class MongoDbOutboxTransaction : IOutboxTransaction
 {
     public IClientSessionHandle ClientSessionHandle { get; }
 
+    private Action? _onCommit;
+
     public MongoDbOutboxTransaction(IClientSessionHandle clientSessionHandle)
     {
         ClientSessionHandle = clientSessionHandle;
     }
 
-    public Task StartTransaction(CancellationToken cancellationToken = default)
+    public Task StartTransaction(Action? onCommit = null, CancellationToken cancellationToken = default)
     {
         ClientSessionHandle.StartTransaction();
+        _onCommit = onCommit;
         return Task.CompletedTask;
     }
 
-    public Task Commit(CancellationToken cancellationToken = default)
+    public async Task Commit(CancellationToken cancellationToken = default)
     {
-        return ClientSessionHandle.CommitTransactionAsync(cancellationToken);
+        await ClientSessionHandle.CommitTransactionAsync(cancellationToken);
+        _onCommit?.Invoke();
     }
 
     public void Dispose()

@@ -1,12 +1,12 @@
 ﻿using MessagePack;
 using Microsoft.Extensions.DependencyInjection;
 using MinimalDomainEvents.Contract;
-using MinimalDomainEvents.Core;
 using MinimalDomainEvents.Dispatcher;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MinimalDomainEvents.Outbox.Worker.Abstractions;
 using MongoDB.Driver;
+using MongoTestContainer;
 
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
 [Collection("MongoDb Integration")]
@@ -47,7 +47,6 @@ public class MongoWorkerTests(MongoContainerFixture fixture) : IAsyncLifetime
 
         var transactionProvider = serviceProvider.GetRequiredService<ITransactionProvider>();
         var retriever = serviceProvider.GetRequiredService<IRetrieveOutboxRecords>();
-        var cleaner = serviceProvider.GetRequiredService<ICleanupOutboxRecords>();
         using var transaction = await transactionProvider.NewTransaction();
 
         var outboxRecords = await retriever.GetAndMarkAsDispatched();
