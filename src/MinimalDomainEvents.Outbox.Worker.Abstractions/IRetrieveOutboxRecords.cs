@@ -1,5 +1,4 @@
-﻿using MinimalDomainEvents.Contract;
-using MinimalDomainEvents.Outbox.Abstractions;
+﻿using MinimalDomainEvents.Outbox.Abstractions;
 
 namespace MinimalDomainEvents.Outbox.Worker.Abstractions;
 public interface IRetrieveOutboxRecords

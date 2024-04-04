@@ -1,10 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher;
-using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using MongoTestContainer;
 
 namespace MinimalDomainEvents.Outbox.MongoDb.UnitTests;
 [Collection("MongoDb Integration")]
