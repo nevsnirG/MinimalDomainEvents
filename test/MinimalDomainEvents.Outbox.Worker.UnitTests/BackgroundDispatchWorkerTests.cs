@@ -113,9 +113,9 @@ public class BackgroundDispatchWorkerTests(MongoContainerFixture fixture) : IAsy
         testDomainEventHandler!.Value.Should().Be("TestValue");
     }
 
-    public sealed record class TestDomainEvent(string Value) : IDomainEvent, INotification;
+    private sealed record class TestDomainEvent(string Value) : IDomainEvent, INotification;
 
-    public class TestHandler : INotificationHandler<TestDomainEvent>
+    private sealed class TestHandler : INotificationHandler<TestDomainEvent>
     {
         public string Value { get; private set; } = string.Empty;
 
