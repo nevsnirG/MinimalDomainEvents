@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Dispatcher.MediatR</PackageId>
-		<Version>0.1.5-alpha</Version>
+		<Version>0.1.6-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 

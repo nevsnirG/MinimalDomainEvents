@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Dispatcher</PackageId>
-		<Version>0.3.1-alpha</Version>
+		<Version>0.3.2-alpha</Version>
 		<Authors>Ken van Grinsven</Authors>
 		<Company>Grinsven Software Solutions</Company>
 
