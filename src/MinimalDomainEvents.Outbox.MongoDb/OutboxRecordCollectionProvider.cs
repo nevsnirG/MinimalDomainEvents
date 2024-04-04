@@ -1,4 +1,5 @@
 ﻿using MinimalDomainEvents.Outbox.Abstractions;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
@@ -15,15 +16,16 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
     private readonly OutboxSettings _outboxSettings;
     private readonly MongoClient _mongoClient;
 
+    private const string EnqueuedAtIndexName = "EnqueuedAt_asc";
+    private const string DispatchedAtIndexName = "ExpiresAt_asc";
+
     public OutboxRecordCollectionProvider(OutboxSettings outboxSettings, MongoClient mongoClient)
     {
         _outboxSettings = outboxSettings;
         _mongoClient = mongoClient;
     }
 
-    //TODO - Indexes op EnqueuedAt en DispatchedAt
-    //TODO - Expiration indexes
-    public Task Initialize(CancellationToken cancellationToken)
+    public async Task Initialize(CancellationToken cancellationToken)
     {
         TryRegisterOutboxRecordClassMap();
 
@@ -35,9 +37,54 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
         };
 
         var collection = Provide(collectionSettings);
+        var existingIndexes = await GetExistingIndexes(collection, cancellationToken);
 
-        //TODO - Create indexes (recreate if exists with same name (because of versioning))
-        return Task.CompletedTask;
+        //TODO - Recreate indexes if changed.
+
+        if (CanCreateEnqueuedAtIndex(existingIndexes))
+            await CreateEnqueuedAtIndex(collection, cancellationToken);
+
+        if (CanCreateDispatchedAtIndex(existingIndexes))
+            await CreateDispatchedAtIndex(collection, cancellationToken);
+    }
+
+    private static async Task<List<BsonDocument>> GetExistingIndexes(IMongoCollection<OutboxRecord> collection, CancellationToken cancellationToken)
+    {
+        var existingIndexesCursor = await collection.Indexes.ListAsync(cancellationToken);
+        return await existingIndexesCursor.ToListAsync(cancellationToken);
+    }
+
+    private static bool CanCreateEnqueuedAtIndex(List<BsonDocument> existingIndexes)
+    {
+        return !existingIndexes.Any(i => i["name"].AsString == EnqueuedAtIndexName);
+    }
+
+    private static bool CanCreateDispatchedAtIndex(List<BsonDocument> existingIndexes)
+    {
+        return !existingIndexes.Any(i => i["name"].AsString == DispatchedAtIndexName);
+    }
+
+    private static async Task CreateEnqueuedAtIndex(IMongoCollection<OutboxRecord> collection, CancellationToken cancellationToken)
+    {
+        var indexKeysDefinition = Builders<OutboxRecord>.IndexKeys.Ascending(or => or.EnqueuedAt);
+        var createIndexModel = new CreateIndexModel<OutboxRecord>(indexKeysDefinition, new()
+        {
+            Name = EnqueuedAtIndexName,
+            Background = true
+        });
+        await collection.Indexes.CreateOneAsync(createIndexModel, null, cancellationToken);
+    }
+
+    private static async Task CreateDispatchedAtIndex(IMongoCollection<OutboxRecord> collection, CancellationToken cancellationToken)
+    {
+        var indexKeysDefinition = Builders<OutboxRecord>.IndexKeys.Ascending(or => or.ExpiresAt);
+        var createIndexModel = new CreateIndexModel<OutboxRecord>(indexKeysDefinition, new()
+        {
+            ExpireAfter = TimeSpan.FromDays(7),
+            Background = true,
+            Name = DispatchedAtIndexName
+        });
+        await collection.Indexes.CreateOneAsync(createIndexModel, null, cancellationToken);
     }
 
     private static bool TryRegisterOutboxRecordClassMap()
@@ -45,6 +92,7 @@ internal sealed class OutboxRecordCollectionProvider : IOutboxRecordCollectionPr
         return BsonClassMap.TryRegisterClassMap<OutboxRecord>(cm =>
         {
             cm.MapIdProperty(or => or.Id);
+            cm.UnmapProperty(or => or.ExpiresAt);
             cm.SetIgnoreExtraElements(true);
         });
     }

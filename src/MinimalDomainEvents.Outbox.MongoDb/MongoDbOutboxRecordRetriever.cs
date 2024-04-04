@@ -40,7 +40,7 @@ internal sealed class MongoDbOutboxRecordRetriever : IRetrieveOutboxRecords
     private IClientSessionHandle GetCurrentMongoClientSession()
     {
         if (!_transactionProvider.TryGetCurrentTransaction(out var transaction) || transaction is not MongoDbOutboxTransaction mongoOutboxTransaction)
-            throw new InvalidOperationException("A mongo transaction must have been started.");
+            throw new InvalidOperationException("A mongo transaction must have been started."); //TODO - Make transaction optional.
         return mongoOutboxTransaction.ClientSessionHandle;
     }
 
