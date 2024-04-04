@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows
+    runs-on: windows-latest
     timeout-minutes: 5
     steps:
     - name: Checkout

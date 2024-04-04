@@ -2,4 +2,4 @@
 
 namespace MinimalDomainEvents.Outbox.Worker.UnitTests;
 [CollectionDefinition("MongoDb Integration")]
-public sealed class MongoContainerCollectionDefinition : ICollectionFixture<MongoContainerFixture> { }
+public sealed class MongoContainerCollectionDefinition : ICollectionFixture<MongoContainerFixture> { } 
