@@ -2,18 +2,11 @@
 using MinimalDomainEvents.Dispatcher.Abstractions;
 
 namespace MinimalDomainEvents.Dispatcher.AspNetCore;
-internal sealed class DomainEventDispatcherMiddleware : IMiddleware
+internal sealed class DomainEventDispatcherMiddleware
 {
-    private readonly IScopedDomainEventDispatcher _domainEventDispatcher;
-
-    public DomainEventDispatcherMiddleware(IScopedDomainEventDispatcher domainEventDispatcher)
-    {
-        _domainEventDispatcher = domainEventDispatcher;
-    }
-
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next, IScopedDomainEventDispatcher domainEventDispatcher)
     {
         await next(context);
-        await _domainEventDispatcher.DispatchAndClear();
+        await domainEventDispatcher.DispatchAndClear();
     }
 }
