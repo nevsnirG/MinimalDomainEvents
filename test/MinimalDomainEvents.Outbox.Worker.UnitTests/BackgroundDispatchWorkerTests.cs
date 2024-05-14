@@ -8,6 +8,7 @@ using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Dispatcher.MediatR;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MinimalDomainEvents.Outbox.MongoDb;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoTestContainer;
 
@@ -44,7 +45,7 @@ public class BackgroundDispatchWorkerTests(MongoContainerFixture fixture) : IAsy
             .ReturnsAsync(outboxTransactionMock.Object);
 
         outboxTransactionMock.Setup(x => x.Commit(It.IsAny<CancellationToken>()))
-            .Callback(cancellationTokenSource.Cancel);
+            .Callback(cancellationTokenSource.Cancel); //The worker has an infinite loop, this makes sure we break the loop after a single iteration.
 
         domainEventRetrieverMock.Setup(x => x.GetAndMarkAsDispatched(It.IsAny<CancellationToken>()))
             .ReturnsAsync([domainEvent]);
@@ -54,11 +55,7 @@ public class BackgroundDispatchWorkerTests(MongoContainerFixture fixture) : IAsy
                                                                    domainEventRetrieverMock.Object,
                                                                    [domainEventDispatcherMock.Object]);
 
-        try
-        {
-            await sut.StartAsync(cancellationToken);
-        }
-        catch (TaskCanceledException) { }
+        await sut.StartAsync(cancellationToken);
 
         collectionInitializer.Verify(x => x.Initialize(It.IsAny<CancellationToken>()), Times.Once);
         domainEventRetrieverMock.Verify(x => x.GetAndMarkAsDispatched(It.IsAny<CancellationToken>()), Times.Once);
@@ -76,7 +73,7 @@ public class BackgroundDispatchWorkerTests(MongoContainerFixture fixture) : IAsy
             cfg.RegisterServicesFromAssemblyContaining(GetType());
         });
         serviceCollection.RemoveAll<INotificationHandler<TestDomainEvent>>();
-        serviceCollection.AddSingleton<INotificationHandler<TestDomainEvent>, TestHandler>();
+        serviceCollection.AddSingleton<INotificationHandler<TestDomainEvent>, AssertableTestHandler>();
 
         serviceCollection.AddDomainEventDispatcher(dispatcherBuilder =>
         {
@@ -96,26 +93,30 @@ public class BackgroundDispatchWorkerTests(MongoContainerFixture fixture) : IAsy
         outboxDispatcher.RaiseDomainEvent(new TestDomainEvent("TestValue"));
 
         var backgroundWorker = serviceProvider.GetRequiredService<IHostedService>() as BackgroundDispatchWorker;
-        var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromHours(5));
-        
+        var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+
         await backgroundWorker!.StartAsync(cancellationTokenSource.Token);
         await Task.Delay(1000); //Wait for the collection to initialize.
         await outboxDispatcher.DispatchAndClear(); //Persist the domain events in the OutboxRecords collection.
         await Task.Delay(2000); //Wait for the worker to dispatch the OutboxRecords.
+        await backgroundWorker.StopAsync(cancellationTokenSource.Token);
 
         var mongoDatabase = mongoClient.GetDatabase(DatabaseName);
         var outboxRecordCollection = mongoDatabase.GetCollection<OutboxRecord>("OutboxRecords");
         var indexes = await (await outboxRecordCollection.Indexes.ListAsync()).ToListAsync();
-        indexes.Should().HaveCount(3); //TODO - Assert them all.
+        indexes.Should().HaveCount(3);
+        indexes.Should().ContainSingle(i => i["key"] == new BsonDocument("_id", 1));
+        indexes.Should().ContainSingle(i => i["key"] == new BsonDocument("EnqueuedAt", 1));
+        indexes.Should().ContainSingle(i => i["key"] == new BsonDocument("DispatchedAt", 1));
         outboxRecordCollection.AsQueryable().All(or => or.DispatchedAt != null).Should().BeTrue();
 
-        var testDomainEventHandler = serviceProvider.GetRequiredService<INotificationHandler<TestDomainEvent>>() as TestHandler;
+        var testDomainEventHandler = serviceProvider.GetRequiredService<INotificationHandler<TestDomainEvent>>() as AssertableTestHandler;
         testDomainEventHandler!.Value.Should().Be("TestValue");
     }
 
     private sealed record class TestDomainEvent(string Value) : IDomainEvent, INotification;
 
-    private sealed class TestHandler : INotificationHandler<TestDomainEvent>
+    private sealed class AssertableTestHandler : INotificationHandler<TestDomainEvent>
     {
         public string Value { get; private set; } = string.Empty;
 
