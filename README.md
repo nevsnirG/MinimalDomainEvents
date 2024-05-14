@@ -66,3 +66,10 @@ using MinimalDomainEvents.Dispatcher.MediatR;
 IServiceCollection services = new ServiceCollection();
 services.AddDomainEventDispatcher(b => b.AddMediatorDispatcher());
 ```
+
+### MinimalDomainEvents.Dispatcher.AspNetCore
+Registers a conventional middleware to track domain events across a request processing pipeline.
+
+```csharp
+app.UseDomainEventDispatcherMiddleware();
+```
