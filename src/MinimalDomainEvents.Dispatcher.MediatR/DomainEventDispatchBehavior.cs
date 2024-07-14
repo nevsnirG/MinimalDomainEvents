@@ -4,7 +4,7 @@ using MinimalDomainEvents.Dispatcher.Abstractions;
 namespace MinimalDomainEvents.Dispatcher.MediatR;
 
 internal sealed class DomainEventDispatchBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+    where TRequest : notnull
 {
     private readonly IScopedDomainEventDispatcher _domainEventDispatcher;
 
