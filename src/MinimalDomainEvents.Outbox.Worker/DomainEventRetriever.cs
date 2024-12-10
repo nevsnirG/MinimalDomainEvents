@@ -1,6 +1,6 @@
 ﻿using MessagePack;
 using MinimalDomainEvents.Contract;
-using MinimalDomainEvents.Outbox.Worker.Abstractions;
+using MinimalDomainEvents.Outbox.Abstractions;
 
 namespace MinimalDomainEvents.Outbox.Worker;
 

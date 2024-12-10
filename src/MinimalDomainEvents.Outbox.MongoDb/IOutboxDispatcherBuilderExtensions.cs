@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MinimalDomainEvents.Outbox.Abstractions;
-using MinimalDomainEvents.Outbox.Worker.Abstractions;
 using MongoDB.Driver;
 
 namespace MinimalDomainEvents.Outbox.MongoDb;

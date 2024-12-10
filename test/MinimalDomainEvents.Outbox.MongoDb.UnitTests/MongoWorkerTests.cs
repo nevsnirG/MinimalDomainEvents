@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
-using MinimalDomainEvents.Outbox.Worker.Abstractions;
 using MongoDB.Driver;
 using MongoTestContainer;
 
