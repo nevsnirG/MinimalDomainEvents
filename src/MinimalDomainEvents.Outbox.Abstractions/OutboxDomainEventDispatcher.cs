@@ -2,9 +2,8 @@
 using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Core;
 using MinimalDomainEvents.Dispatcher.Abstractions;
-using MinimalDomainEvents.Outbox.Abstractions;
 
-namespace MinimalDomainEvents.Outbox;
+namespace MinimalDomainEvents.Outbox.Abstractions;
 internal sealed class OutboxDomainEventDispatcher : IScopedDomainEventDispatcher
 {
     public IDomainEventScope? Scope => _scope;

@@ -1,5 +1,5 @@
-﻿using FluentAssertions.Common;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MinimalDomainEvents.Outbox.Abstractions;
 
 namespace MinimalDomainEvents.Outbox.UnitTests;
 

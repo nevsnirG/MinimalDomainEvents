@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MinimalDomainEvents.Dispatcher;
 using MinimalDomainEvents.Dispatcher.Abstractions;
+using MinimalDomainEvents.Outbox.Abstractions;
 
 namespace MinimalDomainEvents.Outbox.UnitTests;
 

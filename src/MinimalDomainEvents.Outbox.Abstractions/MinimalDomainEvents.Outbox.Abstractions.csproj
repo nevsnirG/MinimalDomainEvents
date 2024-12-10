@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<PackageId>MinimalDomainEvents.Outbox.Abstractions</PackageId>
@@ -28,6 +28,15 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MessagePack" Version="3.0.308" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.Worker.UnitTests"/>
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.UnitTests"/>
 	</ItemGroup>
 
 	<ItemGroup>

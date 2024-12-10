@@ -3,7 +3,7 @@ using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
 using System.Diagnostics;
 
-namespace MinimalDomainEvents.Outbox.Worker;
+namespace MinimalDomainEvents.Outbox.Worker.Abstractions;
 internal sealed class BackgroundDispatchWorker : BackgroundService
 {
     private const int Delay = 1000;

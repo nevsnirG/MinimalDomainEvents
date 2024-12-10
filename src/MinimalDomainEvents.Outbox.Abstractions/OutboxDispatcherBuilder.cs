@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MinimalDomainEvents.Outbox.Abstractions;
 
-namespace MinimalDomainEvents.Outbox;
+namespace MinimalDomainEvents.Outbox.Abstractions;
 
 internal sealed record OutboxDispatcherBuilder(IServiceCollection Services) : IOutboxDispatcherBuilder
 {

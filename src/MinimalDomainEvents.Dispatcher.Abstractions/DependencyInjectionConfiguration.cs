@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MinimalDomainEvents.Dispatcher.Abstractions;
 
-namespace MinimalDomainEvents.Dispatcher;
+namespace MinimalDomainEvents.Dispatcher.Abstractions;
 public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
-        return AddDomainEventDispatcher(services, null, serviceLifetime);
+        return services.AddDomainEventDispatcher(null, serviceLifetime);
     }
 
     public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services, Action<IDomainEventDispatcherBuilder>? configure, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)

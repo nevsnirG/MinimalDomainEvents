@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MinimalDomainEvents.Outbox.Abstractions;
 
-namespace MinimalDomainEvents.Outbox.Worker;
+namespace MinimalDomainEvents.Outbox.Worker.Abstractions;
 
 public static class IOutboxDispatcherBuilderExtensions
 {

@@ -1,7 +1,6 @@
 ﻿using MessagePack;
 using Microsoft.Extensions.DependencyInjection;
 using MinimalDomainEvents.Contract;
-using MinimalDomainEvents.Dispatcher;
 using MinimalDomainEvents.Dispatcher.Abstractions;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MinimalDomainEvents.Outbox.Worker.Abstractions;

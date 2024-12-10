@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MinimalDomainEvents.Dispatcher.Abstractions;
-using MinimalDomainEvents.Outbox.Abstractions;
 
-namespace MinimalDomainEvents.Outbox;
+namespace MinimalDomainEvents.Outbox.Abstractions;
 
 public static class IDomainEventDispatcherBuilderExtensions
 {
@@ -19,7 +18,7 @@ public static class IDomainEventDispatcherBuilderExtensions
 
     public static IDomainEventDispatcherBuilder AddOutbox(this IDomainEventDispatcherBuilder builder, Action<IOutboxDispatcherBuilder>? configure)
     {
-        AddOutbox(builder);
+        builder.AddOutbox();
 
         if (configure is not null)
         {

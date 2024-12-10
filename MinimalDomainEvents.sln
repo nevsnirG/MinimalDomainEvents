@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Core", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Contract", "src\MinimalDomainEvents.Contract\MinimalDomainEvents.Contract.csproj", "{DE007C35-3549-4E82-BC5C-5093BE7E208D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher", "src\MinimalDomainEvents.Dispatcher\MinimalDomainEvents.Dispatcher.csproj", "{5C00642B-D38B-473E-9773-17E6650C8215}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.MediatR", "src\MinimalDomainEvents.Dispatcher.MediatR\MinimalDomainEvents.Dispatcher.MediatR.csproj", "{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dispatcher", "Dispatcher", "{33E5376B-09DA-4B6A-896E-DE8F5F76F9CD}"
@@ -45,19 +43,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Dispatcher.AspNetCore", "src\MinimalDomainEvents.Dispatcher.AspNetCore\MinimalDomainEvents.Dispatcher.AspNetCore.csproj", "{5EFC73F8-E339-4381-99B8-09373D3D65A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox", "src\MinimalDomainEvents.Outbox\MinimalDomainEvents.Outbox.csproj", "{46DA61E0-A00F-48E6-9893-F0DD60A3CC84}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.MongoDb.NServiceBus", "src\MinimalDomainEvents.Outbox.MongoDb.NServiceBus\MinimalDomainEvents.Outbox.MongoDb.NServiceBus.csproj", "{1494E95E-95E3-44FA-AE99-8DCDAB30091E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.UnitTests", "test\MinimalDomainEvents.Outbox.UnitTests\MinimalDomainEvents.Outbox.UnitTests.csproj", "{8AF26DBB-B17B-45D1-B358-BD13107A3E6E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.Worker", "src\MinimalDomainEvents.Outbox.Worker\MinimalDomainEvents.Outbox.Worker.csproj", "{2DEA751C-8CE8-4452-A365-68F1AAE76551}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.Worker.Abstractions", "src\MinimalDomainEvents.Outbox.Worker.Abstractions\MinimalDomainEvents.Outbox.Worker.Abstractions.csproj", "{03BBC09D-9E45-487F-AB2A-C0ADA46B58A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.Worker", "src\MinimalDomainEvents.Outbox.Worker.Abstractions\MinimalDomainEvents.Outbox.Worker.csproj", "{03BBC09D-9E45-487F-AB2A-C0ADA46B58A1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalDomainEvents.Outbox.Worker.UnitTests", "test\MinimalDomainEvents.Outbox.Worker.UnitTests\MinimalDomainEvents.Outbox.Worker.UnitTests.csproj", "{F3C36E6D-6A1A-4407-87A6-D77B24C0576D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoTestContainer", "test\MongoTestContainer\MongoTestContainer.csproj", "{99C8CE04-4BC6-4206-B86C-1CE649C7FC19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTestContainer", "test\MongoTestContainer\MongoTestContainer.csproj", "{99C8CE04-4BC6-4206-B86C-1CE649C7FC19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,10 +67,6 @@ Global
 		{DE007C35-3549-4E82-BC5C-5093BE7E208D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE007C35-3549-4E82-BC5C-5093BE7E208D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE007C35-3549-4E82-BC5C-5093BE7E208D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C00642B-D38B-473E-9773-17E6650C8215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C00642B-D38B-473E-9773-17E6650C8215}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C00642B-D38B-473E-9773-17E6650C8215}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C00642B-D38B-473E-9773-17E6650C8215}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -109,10 +99,6 @@ Global
 		{5EFC73F8-E339-4381-99B8-09373D3D65A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EFC73F8-E339-4381-99B8-09373D3D65A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EFC73F8-E339-4381-99B8-09373D3D65A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46DA61E0-A00F-48E6-9893-F0DD60A3CC84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46DA61E0-A00F-48E6-9893-F0DD60A3CC84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46DA61E0-A00F-48E6-9893-F0DD60A3CC84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46DA61E0-A00F-48E6-9893-F0DD60A3CC84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1494E95E-95E3-44FA-AE99-8DCDAB30091E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1494E95E-95E3-44FA-AE99-8DCDAB30091E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1494E95E-95E3-44FA-AE99-8DCDAB30091E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -121,10 +107,6 @@ Global
 		{8AF26DBB-B17B-45D1-B358-BD13107A3E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AF26DBB-B17B-45D1-B358-BD13107A3E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AF26DBB-B17B-45D1-B358-BD13107A3E6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DEA751C-8CE8-4452-A365-68F1AAE76551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DEA751C-8CE8-4452-A365-68F1AAE76551}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DEA751C-8CE8-4452-A365-68F1AAE76551}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DEA751C-8CE8-4452-A365-68F1AAE76551}.Release|Any CPU.Build.0 = Release|Any CPU
 		{03BBC09D-9E45-487F-AB2A-C0ADA46B58A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03BBC09D-9E45-487F-AB2A-C0ADA46B58A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03BBC09D-9E45-487F-AB2A-C0ADA46B58A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -144,7 +126,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A34E31FD-0B03-412D-8427-2307D1F1D685} = {A3B7B6C3-57FD-4382-8526-9B1C48935A07}
 		{DE007C35-3549-4E82-BC5C-5093BE7E208D} = {A3B7B6C3-57FD-4382-8526-9B1C48935A07}
-		{5C00642B-D38B-473E-9773-17E6650C8215} = {33E5376B-09DA-4B6A-896E-DE8F5F76F9CD}
 		{C7FC5A79-7F77-4439-8E8C-F6E6DD89473F} = {33E5376B-09DA-4B6A-896E-DE8F5F76F9CD}
 		{33E5376B-09DA-4B6A-896E-DE8F5F76F9CD} = {A3B7B6C3-57FD-4382-8526-9B1C48935A07}
 		{59652783-822F-4C8F-8F58-8EFC8BFD6EEF} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}
@@ -156,10 +137,8 @@ Global
 		{358F8277-48A1-49F5-B4E3-FC3BAE067839} = {AB124D7A-09CE-4168-B706-F319426E6383}
 		{510D97A3-05DB-4C57-BD0B-2E9DF28164B5} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}
 		{5EFC73F8-E339-4381-99B8-09373D3D65A2} = {33E5376B-09DA-4B6A-896E-DE8F5F76F9CD}
-		{46DA61E0-A00F-48E6-9893-F0DD60A3CC84} = {AB124D7A-09CE-4168-B706-F319426E6383}
 		{1494E95E-95E3-44FA-AE99-8DCDAB30091E} = {AB124D7A-09CE-4168-B706-F319426E6383}
 		{8AF26DBB-B17B-45D1-B358-BD13107A3E6E} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}
-		{2DEA751C-8CE8-4452-A365-68F1AAE76551} = {AB124D7A-09CE-4168-B706-F319426E6383}
 		{03BBC09D-9E45-487F-AB2A-C0ADA46B58A1} = {AB124D7A-09CE-4168-B706-F319426E6383}
 		{F3C36E6D-6A1A-4407-87A6-D77B24C0576D} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}
 		{99C8CE04-4BC6-4206-B86C-1CE649C7FC19} = {A37BECD1-4461-4E64-BF71-B48ACEBB8447}

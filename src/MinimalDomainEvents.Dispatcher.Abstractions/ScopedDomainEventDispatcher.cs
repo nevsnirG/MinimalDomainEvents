@@ -1,8 +1,7 @@
 ﻿using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Core;
-using MinimalDomainEvents.Dispatcher.Abstractions;
 
-namespace MinimalDomainEvents.Dispatcher;
+namespace MinimalDomainEvents.Dispatcher.Abstractions;
 /// <summary>
 /// Records raised domain events in it's scope and dispatches them using the provided <see cref="IDispatchDomainEvents">IDispatchDomainEvents</see> implementations.
 /// </summary>
