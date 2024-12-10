@@ -29,6 +29,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\MinimalDomainEvents.Dispatcher.MediatR\MinimalDomainEvents.Dispatcher.MediatR.csproj" />
 	  <ProjectReference Include="..\..\src\MinimalDomainEvents.Outbox.MongoDb\MinimalDomainEvents.Outbox.MongoDb.csproj" />
+	  <ProjectReference Include="..\..\src\MinimalDomainEvents.Outbox.Worker\MinimalDomainEvents.Outbox.Worker.csproj" />
 	  <ProjectReference Include="..\MongoTestContainer\MongoTestContainer.csproj" />
 	</ItemGroup>
 

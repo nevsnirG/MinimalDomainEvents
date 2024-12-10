@@ -32,11 +32,12 @@
 
 	<ItemGroup>
 	  <PackageReference Include="MessagePack" Version="3.0.308" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.Worker.UnitTests"/>
-		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.UnitTests"/>
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.Worker.UnitTests" />
+		<InternalsVisibleTo Include="MinimalDomainEvents.Outbox.UnitTests" />
 	</ItemGroup>
 
 	<ItemGroup>

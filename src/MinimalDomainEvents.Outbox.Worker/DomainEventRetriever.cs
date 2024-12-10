@@ -1,7 +1,8 @@
 ﻿using MessagePack;
 using MinimalDomainEvents.Contract;
+using MinimalDomainEvents.Outbox.Worker.Abstractions;
 
-namespace MinimalDomainEvents.Outbox.Worker.Abstractions;
+namespace MinimalDomainEvents.Outbox.Worker;
 
 internal interface IDomainEventRetriever
 {

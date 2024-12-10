@@ -1,16 +1,15 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using MinimalDomainEvents.Contract;
 using MinimalDomainEvents.Dispatcher.Abstractions;
-using MinimalDomainEvents.Dispatcher.MediatR;
 using MinimalDomainEvents.Outbox.Abstractions;
 using MinimalDomainEvents.Outbox.MongoDb;
-using MinimalDomainEvents.Outbox.Worker.Abstractions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoTestContainer;
+using MinimalDomainEvents.Dispatcher.MediatR;
+using Microsoft.Extensions.Hosting;
 
 namespace MinimalDomainEvents.Outbox.Worker.UnitTests;
 [Collection("MongoDb Integration")]
